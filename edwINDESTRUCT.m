@@ -1,16 +1,23 @@
 diary on
+format long
 fprintf('\n\t\t\t ‘ ; ........................................................ ');
 fprintf('\n\t\t\t ‘ ; ........................................................ ');
-fprintf('\n\t\t\t ‘;|           UNIVERSIDAD AUTÓNOMA DE NUEVO LEÓN            |');
+fprintf('\n\t\t\t ‘;|                                                         |');
+fprintf('\n\t\t\t ‘;|          UNIVERSIDAD AUTÓNOMA DE NUEVO LEÓN             |');
 fprintf('\n\t\t\t ‘;|                                                         |');
 fprintf('\n\t\t\t ‘;|              FACULTAD DE INGENIERÍA CIVIL               |');
 fprintf('\n\t\t\t ‘;|                 ANALISIS ESTRUCTURAL II                 |');
-fprintf('\n\t\t\t ‘;|                 PROGRAMA PARA RESOLVER:                 |');
-fprintf('\n\t\t\t ‘;|           MARCOS PLANOS CONSIDERANDO CORTANTE           |');
 fprintf('\n\t\t\t ‘;|                                                         |');
-fprintf('\n\t\t\t ‘;|                ING. EDWIN M. R. MARTÍNEZ                |');
-fprintf('\n\t\t\t ‘;|                    DR. JORGE CHAVEZ                     |');
+fprintf('\n\t\t\t ‘;|                 PROGRAMA PARA RESOLVER:                 |');
+fprintf('\n\t\t\t ‘;|          MARCOS PLANOS CONSIDERANDO CORTANTE            |');
+fprintf('\n\t\t\t ‘;|                                                         |');
+fprintf('\n\t\t\t ‘ ; .........................................................');
+fprintf('\n\t\t\t ‘;|                     ¡INDESTRUCT!                        |');
+fprintf('\n\t\t\t ‘ ; .........................................................');
+fprintf('\n\t\t\t ‘;|               ING. EDWIN M. R. MARTÍNEZ                 |');
+fprintf('\n\t\t\t ‘;|                                                         |');
 fprintf('\n\t\t\t ‘;|                       2013-03-13                        |');
+fprintf('\n\t\t\t ‘;|                                                         |');
 fprintf('\n\t\t\t  ‘;..........................................................');
 fprintf('\n\t\t\t ‘ ; .........................................................');
 fprintf('\n\n\n');
@@ -84,7 +91,6 @@ for i=1: nnr
    VC
    
    %--------------- ARREGLO L, SENO, COSENO -------------------------------
-   format long
    fprintf('\n COORDENADAS EN LOS NUDOS:\n');
    for i=1:nod
       fprintf('\n NUDO %d:',i);
@@ -124,180 +130,58 @@ for i=1: nnr
    T2_3=zeros(6,6);
    fprintf('\n\n UNICAMENTE EN LA SECCIÓN RECTANGULAR PRISMÁTICA SE PUEDEN MODELAR EXTREMOS INFINITAMENTE RÍGIDOS');
    for i=1:mbr
-      fprintf('\n MIEMBRO %d:',i);
-      fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
-      fprintf('\n\n\t\t (1) MIEMBRO PRISMÁTICO DE SECCIÓN RECTANGULAR');
-      fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCIÓN VARIABLE');
-      fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCIÓN VARIABLE');
-      fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCIÓN PRISMÁTICA CONSTANTE');
-      fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCIÓN VARIABLE');
-      DD(i) = input('\n\n OPCION : ');
-      fprintf('\n\n\n'); 
-      % ELEMENTO PRISMÁTICO DE SECCIÓN CONSTANTE DE FORMA RECTANGULAR
-      if DD(i)==1
-          B(i)=input('\n BASE DEL ELEMENTO [m]:');
-          H(i)=input(' ALTURA DEL ELEMENTO [m]:');
-          % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
-          % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
-          % SECCIONES
-          Bi(i)=B(i);
-          Hi(i)=H(i);
-          Bf(i)=Bi(i);
-          Hf(i)=Hi(i);
-          Di(i)=B(i);
-          Df(i)=Di(i);
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
-          C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
-          C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
-          F(i)=L(i)-C1(i)-C2(i)
-          % CONSTANTES AUXILIARES PARA FUTUROS DESARROLLOS EN 3D
-          AREA(i)=B(i)*H(i);
-          INERx(i)=(B(i)*H(i)^3)/12;
-          INERy(i)=(H(i)*B(i)^3)/12;
-          FIx(i)=(12*ELAS*INERx(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
-          FIy(i)=(12*ELAS*INERy(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
-          % GENERACIÓN DE LAS VARIABLES
-          FI(i)=(1/4)*FIx(i);
-          C=((4*ELAS*INERx(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
-          CP=C;
-          A=((2*ELAS*INERx(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
-          B=((6*ELAS*INERx(i))/L(i)^2)*(1/(1+4*FI(i)));
-          BP=B;
-          T=(12*ELAS*INERx(i))/L(i)^3*(1/(1+4*FI(i)));
-          R=ELAS*AREA(i)/L(i);
-          % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
-          K2=[R 0 0 -R 0 0;
-          0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
-          0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
-          -R 0 0 R 0 0;
-          0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
-          0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
-          % MATRIZ DE TRANSPORTE
-          T2_3=zeros(6,6);
-          T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
-          T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
-          T2_3(3,3)=1;
-          T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
-          T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
-          T2_3(6,6)=1;
-          % ELEMENTO CUADRADO SÓLIDO DE SECCIÓN VARIABLE
-      elseif DD(i)==2
-          Bi(i)=input('\n BASE INICIAL [m]:');
-          Hi(i)=Bi(i);
-          Bf(i)=input('\n BASE FINAL [m]:');
-          % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
-          % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
-          % SECCIONES
-          Hf(i)=Bf(i);
-          B(i)=Bi(i);
-          H(i)=Hi(i);
-          Di(i)=Bi(i);
-          Df(i)=Di(i);
-          BET(i)=1.2;
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
-          f11=(L(i)/(ELAS*Hi(i)*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
-          f22=(4*(L(i))^3/(ELAS*(Hi(i))^4))*(Hi(i)/Hf(i))^3+(6*L(i)/(5*GCOR*(Hi(i))^2))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
-          f33=f22;
-          f26=(4*(L(i))^2/(ELAS*(Hi(i))^4))*((Hi(i)/Hf(i))^3+(1/2)*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i))));
-          f35=f26;
-          f66=(4*L(i)/(ELAS*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
-          f55=f66;
-          f44=(64*L(i)/(27*GCOR*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
-          % ELEMENTOS DE LA MATRIZ DE RIGIDECES
-          raz=1/f11;
-          Detx=f22*f66-f26*f26;
-          r11x=f22/Detx;
-          r12x=(f26*L(i)-f22)/Detx;
-          r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
-          raax=(r11x+r22x+2*r12x)/(L(i))^2;
-          rabx=(r11x+r12x)/L(i);
-          rbax=(r22x+r12x)/L(i);
-          % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
-          K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
-          K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
-          K21=K12';
-          K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
-          K2=[K11 K12 ;K21 K22];
-          % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
-          T2_3=zeros(6,6);
-          T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
-          T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
-          T2_3(3,3)=1;
-          T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
-          T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
-          T2_3(6,6)=1;
-          % ELEMENTO RECTANGULAR SÓLIDO DE SECCIÓN VARIABLE
-      elseif DD(i)==3
-          Bi(i)=input('\n BASE DE TODO EL ELEMENTO [m]:');
-          Hi(i)=input(' ALTURA INICIAL DEL ELEMENTO [m]:');
-          Bf(i)=Bi(i);
-          Hf(i)=input(' ALTURA FINAL DEL ELEMENTO [m]:');
-          Bb=Bi(i);
-          % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
-          % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
-          % SECCIONES
-          B(i)=Bi(i);
-          H(i)=Hi(i);
-          Di(i)=Bi(i);
-          Df(i)=Di(i);
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          BET(i)=input('\n FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
-          fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
-          fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
-          fprintf('\n\n\t\t     LA FUNCIÓN F(x) INDICA LA VARIACIÓN CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
-          fprintf('\n\t\t\t                                                                    ');
-          fprintf('\n\n\t\t     SI LA FUNCIÓN ES LINEAL: Y=F(x)=');
-          fprintf('\n\t\t\t                                      -Hi/2+((Hi-Hf)/(2*LL))*x                                       ');
-          fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
-          fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
-          fprintf('\n\t\t\t ‘ ;                                                                                                                           ');
-          fprintf('\n\t\t\t   ESTANDO EL EJE X SOBRE EL     Y|                                                                                            ');
-          fprintf('\n\t\t\t    CENTROIDE DEL MIEMBRO         |                                                                                            ');
-          fprintf('\n\t\t\t                                  |                                                                                            ');
-          fprintf('\n\t\t\t                                  |_ _ _ _ _                                                                                   ');
-          fprintf('\n\t\t\t                                           X                                                                                   ');
-          fprintf('\n\t\t\t                                                                                                                               ');
-          fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
-          fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
-          fprintf('\n\t\t\t                                                                                                                              ');
-          fprintf('\n\t\t\t                                                                                                                              ');
-          fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
-          fprintf('\n\n\t\t (1) FUNCIÓN LINEAL SOBRE EL EJE CENTROIDAL');
-          fprintf('\n\n\t\t (2) OTRO TIPO DE VARIACIÓN');
-          EE = input('\n\n OPCION : ');
-          if EE==1
-              % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
-              f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
-              f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
-              f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
-              f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              % DEFINICIÓN DE UNA FUNCIÓN DE x
-              Hi=Hi(i);
-              Hf=Hf(i);
-              LL=L(i);
-              dpc= @(x)(1./(((Bb.^3*(-Hi./2+((Hi-Hf)./(2*LL))*x))./3)*(1-(192*Bb./(pi.^5*(-Hi./2+((Hi-Hf)./(2*LL))*x)))*(tanh(pi*(-Hi./2+((Hi-Hf)./(2*LL))*x)./(2*Bb))))));
-              f44=quad(@(x)dpc, 0, LL)
-              % ELEMENTOS DE LA MATRIZ DE RIGIDECES
-              raz=1/f11;
-              Detx=f22*f66-f26*f26;
-              r11x=f22/Detx;
-              r12x=(f26*L(i)-f22)/Detx;
-              r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
-              raax=(r11x+r22x+2*r12x)/(L(i))^2;
-              rabx=(r11x+r12x)/L(i);
-              rbax=(r22x+r12x)/L(i);
+       if i==1
+           fprintf('\n MIEMBRO %d:',i);
+           fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
+           fprintf('\n\n\t\t (1) MIEMBRO PRISMÁTICO DE SECCIÓN RECTANGULAR');
+           fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCIÓN VARIABLE');
+           fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCIÓN VARIABLE');
+           fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCIÓN PRISMÁTICA CONSTANTE');
+           fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCIÓN VARIABLE');
+           DD(i) = input('\n\n OPCION : ');
+           fprintf('\n\n\n'); 
+           % ELEMENTO PRISMÁTICO DE SECCIÓN CONSTANTE DE FORMA RECTANGULAR
+          if DD(i)==1
+              B(i)=input('\n BASE DEL ELEMENTO [m]:');
+              H(i)=input(' ALTURA DEL ELEMENTO [m]:');
+              % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+              % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+              % SECCIONES
+              Bi(i)=B(i);
+              Hi(i)=H(i);
+              Bf(i)=Bi(i);
+              Hf(i)=Hi(i);
+              Di(i)=B(i);
+              Df(i)=Di(i);
+              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+              BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+              C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
+              C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
+              F(i)=L(i)-C1(i)-C2(i)
+              % CONSTANTES AUXILIARES PARA FUTUROS DESARROLLOS EN 3D
+              AREA(i)=B(i)*H(i);
+              INERx(i)=(B(i)*H(i)^3)/12;
+              INER(i)=INERx(i);
+              INERy(i)=(H(i)*B(i)^3)/12;
+              FIx(i)=(12*ELAS*INERx(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+              FIy(i)=(12*ELAS*INERy(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+              % GENERACIÓN DE LAS VARIABLES
+              FI(i)=(1/4)*FIx(i);
+              C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+              CP=C;
+              A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+              B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+              BP=B;
+              T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+              R=ELAS*AREA(i)/L(i);
               % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
-              K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
-              K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
-              K21=K12';
-              K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
-              K2=[K11 K12 ;K21 K22];
-              % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+              K2=[R 0 0 -R 0 0;
+              0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+              0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+              -R 0 0 R 0 0;
+              0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+              0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+              % MATRIZ DE TRANSPORTE
               T2_3=zeros(6,6);
               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
@@ -305,22 +189,244 @@ for i=1: nnr
               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
               T2_3(6,6)=1;
-          else        
+              % ELEMENTO CUADRADO SÓLIDO DE SECCIÓN VARIABLE
+          elseif DD(i)==2
+              Bi(i)=input('\n BASE INICIAL [m]:');
+              Hi(i)=Bi(i);
+              Bf(i)=input('\n BASE FINAL [m]:');
+             % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+             % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+             % SECCIONES
+             Hf(i)=Bf(i);
+             B(i)=Bi(i);
+             H(i)=Hi(i);
+             Di(i)=Bi(i);
+             Df(i)=Di(i);
+             BET(i)=1.2;
+             INER(i)=(B(i)*H(i)^3)/12;
+             FI(i)=1;
+             AREA(i)=B(i)*H(i);
+             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+             % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+             f11=(L(i)/(ELAS*Hi(i)*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+             f22=(4*(L(i))^3/(ELAS*(Hi(i))^4))*(Hi(i)/Hf(i))^3+(6*L(i)/(5*GCOR*(Hi(i))^2))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+             f33=f22;
+             f26=(4*(L(i))^2/(ELAS*(Hi(i))^4))*((Hi(i)/Hf(i))^3+(1/2)*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i))));
+             f35=f26;
+             f66=(4*L(i)/(ELAS*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+             f55=f66;
+             f44=(64*L(i)/(27*GCOR*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+             % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+             raz=1/f11;
+             Detx=f22*f66-f26*f26;
+             r11x=f22/Detx;
+             r12x=(f26*L(i)-f22)/Detx;
+             r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+             raax=(r11x+r22x+2*r12x)/(L(i))^2;
+             rabx=(r11x+r12x)/L(i);
+             rbax=(r22x+r12x)/L(i);
+             % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+             K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+             K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+             K21=K12';
+             K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+             K2=[K11 K12 ;K21 K22];
+             % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+             T2_3=zeros(6,6);
+             T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+             T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+             T2_3(3,3)=1;
+             T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+             T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+             T2_3(6,6)=1;
+             % ELEMENTO RECTANGULAR SÓLIDO DE SECCIÓN VARIABLE
+          elseif DD(i)==3
+              Bi(i)=input('\n BASE DE TODO EL ELEMENTO [m]:');
+              Hi(i)=input(' ALTURA INICIAL DEL ELEMENTO [m]:');
+              Bf(i)=Bi(i);
+              Hf(i)=input(' ALTURA FINAL DEL ELEMENTO [m]:');
+              Bb=Bi(i);
+              % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+              % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+              % SECCIONES
+              B(i)=Bi(i);
+              H(i)=Hi(i);
+              Di(i)=Bi(i);
+              Df(i)=Di(i);
+              INER(i)=(B(i)*H(i)^3)/12;
+              FI(i)=1;
+              AREA(i)=B(i)*H(i);
+              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+              BET(i)=input('\n FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+              fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+              fprintf('\n\n\t\t     LA FUNCIÓN F(x) INDICA LA VARIACIÓN CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
+              fprintf('\n\t\t\t                                                                    ');
+              fprintf('\n\n\t\t     SI LA FUNCIÓN ES LINEAL: Y=F(x)=');
+              fprintf('\n\t\t\t                                      -Hi/2+((Hi-Hf)/(2*LL))*x                                       ');
+              fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‘ ;                                                                                                                           ');
+              fprintf('\n\t\t\t   ESTANDO EL EJE X SOBRE EL     Y|                                                                                            ');
+              fprintf('\n\t\t\t    CENTROIDE DEL MIEMBRO         |                                                                                            ');
+              fprintf('\n\t\t\t                                  |                                                                                            ');
+              fprintf('\n\t\t\t                                  |_ _ _ _ _                                                                                   ');
+              fprintf('\n\t\t\t                                           X                                                                                   ');
+              fprintf('\n\t\t\t                                                                                                                               ');
+              fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t                                                                                                                              ');
+              fprintf('\n\t\t\t                                                                                                                              ');
+              fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
+              fprintf('\n\n\t\t (1) FUNCIÓN LINEAL SOBRE EL EJE CENTROIDAL');
+              fprintf('\n\n\t\t (2) OTRO TIPO DE VARIACIÓN');
+              EE = input('\n\n OPCION : ');
+              if EE(i)==1
+                  % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                  f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
+                  f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
+                  f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
+                  f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  % DEFINICIÓN DE UNA FUNCIÓN DE x
+                  Hi=Hi(i);
+                  Hf=Hf(i);
+                  LL=L(i);
+                  dpc= @(x)(1./(((Bb.^3*(-Hi./2+((Hi-Hf)./(2*LL))*x))./3)*(1-(192*Bb./(pi.^5*(-Hi./2+((Hi-Hf)./(2*LL))*x)))*(tanh(pi*(-Hi./2+((Hi-Hf)./(2*LL))*x)./(2*Bb))))));
+                  f44=quad(@(x)dpc, 0, LL)
+                  % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                  raz=1/f11;
+                  Detx=f22*f66-f26*f26;
+                  r11x=f22/Detx;
+                  r12x=(f26*L(i)-f22)/Detx;
+                  r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                  raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                  rabx=(r11x+r12x)/L(i);
+                  rbax=(r22x+r12x)/L(i);
+                  % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                  K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                  K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                  K21=K12';
+                  K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                  K2=[K11 K12 ;K21 K22];
+                  % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                  T2_3=zeros(6,6);
+                  T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                  T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                  T2_3(3,3)=1;
+                  T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                  T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                  T2_3(6,6)=1;
+              else
+                  % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                  f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
+                  f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
+                  f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
+                  f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                  % DEFINICIÓN DE UNA FUNCIÓN DE x
+                  Hi=Hi(i);
+                  Hf=Hf(i);
+                  LL=L(i);
+                  f44=input(' INTRODUZCA LA f44=');
+                  % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                  raz=1/f11;
+                  Detx=f22*f66-f26*f26;
+                  r11x=f22/Detx;
+                  r12x=(f26*L(i)-f22)/Detx;
+                  r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                  raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                  rabx=(r11x+r12x)/L(i);
+                  rbax=(r22x+r12x)/L(i);
+                  % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                  K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                  K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                  K21=K12';
+                  K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                  K2=[K11 K12 ;K21 K22];
+                  % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                  T2_3=zeros(6,6);
+                  T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                  T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                  T2_3(3,3)=1;
+                  T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                  T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                  T2_3(6,6)=1;
+              end
+              % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN CONSTATE
+          elseif DD(i)==4
+              Di(i)=input('\n DIÁMETRO DEL ELEMENTO [m]:');
+              % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+              % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+              % SECCIONES
+              Df(i)=Di(i);
+              B(i)=Di(i);
+              H(i)=Di(i);
+              Bi(i)=B(i);
+              Hi(i)=H(i);
+              Bf(i)=Bi(i);
+              Hf(i)=Hi(i);
+              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+              BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+              AREA(i)=pi*Di(i)*Di(i)/4;
+              INER(i)=pi*(Di(i)/2)^4/4;
+              C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
+              C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
+              F(i)=L(i)-C1(i)-C2(i)
+              FI(i)=(3*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+              C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+              CP=C;
+              A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+              B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+              BP=B;
+              T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+              R=ELAS*AREA(i)/L(i);
+              K2=[R 0 0 -R 0 0;
+              0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+              0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+              -R 0 0 R 0 0;
+              0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+              0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+              T2_3=zeros(6,6);
+              T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+              T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+              T2_3(3,3)=1;
+              T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+              T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+              T2_3(6,6)=1;
+              % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN VARIABLE
+          elseif DD(i)==5
+              Di(i)=input('\n DIÁMETRO INICIAL DEL ELEMENTO [m]:');
+              Df(i)=input('\n DIÁMETRO FINAL DEL ELEMENTO [m]:');
+              BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+              % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+              % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+              % SECCIONES
+              B(i)=Di(i);
+              H(i)=Df(i);
+              Bi(i)=B(i);
+              Hi(i)=H(i);
+              Bf(i)=Bi(i);
+              Hf(i)=Hi(i);
+              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+              AREA(i)=pi*Di(i)*Di(i)/4;
+              INER(i)=pi*(Di(i)/2)^4/4;
+              FIx(i)=(12*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2)
+              FIy(i)=FIx(i);
+              FI(i)=(1/4)*FIx(i);
               % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
-              f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
-              f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
-              f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
-              f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-              % DEFINICIÓN DE UNA FUNCIÓN DE x
-              Hi=Hi(i);
-              Hf=Hf(i);
-              LL=L(i);
-              FZ=input(' INTRODUZCA LA FUNCIÓN F(x)=');
-              dpc= @(x)1./(((Bb.^3*FZ)./3)*(1-(192*Bb./(pi.^5*FZ)).*(tanh(pi*FZ./(2*Bb)))));
-              f44=quad(@(x)dpc, 0, LL)
+              f11=(4*L(i)/(pi*ELAS*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-Di(i)/Df(i));
+              f22=(64*(L(i))^3/(3*pi*ELAS*(Di(i))^4))*(Di(i)/Df(i))^3+(40*L(i)/(9*pi*GCOR*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i)));
+              f33=f22;
+              f26=(64*(L(i))^2/(3*pi*ELAS*(Di(i))^4))*((Di(i)/Df(i))^3+(1/2)*(Di(i)/(Df(i)-Di(i)))^2*(1+(Di(i)/Df(i))^2-2*(Di(i)/Df(i))));
+              f35=f26;
+              f66=(64*L(i)/(3*pi*ELAS*(Di(i))^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
+              f55=f66;
+              f44=(32*L(i)/(3*pi*GCOR*Di(i)^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
               % ELEMENTOS DE LA MATRIZ DE RIGIDECES
               raz=1/f11;
               Detx=f22*f66-f26*f26;
@@ -345,99 +451,823 @@ for i=1: nnr
               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
               T2_3(6,6)=1;
           end
-          % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN CONSTATE
-      elseif DD(i)==4
-          Di(i)=input('\n DIÁMETRO DEL ELEMENTO [m]:');
-          % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
-          % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
-          % SECCIONES
-          Df(i)=Di(i);
-          B(i)=Di(i);
-          H(i)=Di(i);
-          Bi(i)=B(i);
-          Hi(i)=H(i);
-          Bf(i)=Bi(i);
-          Hf(i)=Hi(i);
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
-          AREA(i)=pi*Di(i)*Di(i)/4;
-          INER(i)=pi*(Di(i)/2)^4/4;
-          C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
-          C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
-          F(i)=L(i)-C1(i)-C2(i)
-          FI(i)=(3*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
-          C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
-          CP=C;
-          A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
-          B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
-          BP=B;
-          T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
-          R=ELAS*AREA(i)/L(i);
-          K2=[R 0 0 -R 0 0;
-          0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
-          0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
-          -R 0 0 R 0 0;
-          0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
-          0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
-          T2_3=zeros(6,6);
-          T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
-          T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
-          T2_3(3,3)=1;
-          T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
-          T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
-          T2_3(6,6)=1;
-          % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN VARIABLE
-      elseif DD(i)==5
-          Di(i)=input('\n DIÁMETRO INICIAL DEL ELEMENTO [m]:');
-          Df(i)=input('\n DIÁMETRO FINAL DEL ELEMENTO [m]:');
-          BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
-          % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
-          % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
-          % SECCIONES
-          B(i)=Di(i);
-          H(i)=Df(i);
-          Bi(i)=B(i);
-          Hi(i)=H(i);
-          Bf(i)=Bi(i);
-          Hf(i)=Hi(i);
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          AREA(i)=pi*Di(i)*Di(i)/4;
-          INER(i)=pi*(Di(i)/2)^4/4;
-          FIx(i)=(12*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2)
-          FIy(i)=FIx(i);
-          % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
-          f11=(4*L(i)/(pi*ELAS*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-Di(i)/Df(i));
-          f22=(64*(L(i))^3/(3*pi*ELAS*(Di(i))^4))*(Di(i)/Df(i))^3+(40*L(i)/(9*pi*GCOR*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i)));
-          f33=f22;
-          f26=(64*(L(i))^2/(3*pi*ELAS*(Di(i))^4))*((Di(i)/Df(i))^3+(1/2)*(Di(i)/(Df(i)-Di(i)))^2*(1+(Di(i)/Df(i))^2-2*(Di(i)/Df(i))));
-          f35=f26;
-          f66=(64*L(i)/(3*pi*ELAS*(Di(i))^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
-          f55=f66;
-          f44=(32*L(i)/(3*pi*GCOR*Di(i)^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
-          % ELEMENTOS DE LA MATRIZ DE RIGIDECES
-          raz=1/f11;
-          Detx=f22*f66-f26*f26;
-          r11x=f22/Detx;
-          r12x=(f26*L(i)-f22)/Detx;
-          r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
-          raax=(r11x+r22x+2*r12x)/(L(i))^2;
-          rabx=(r11x+r12x)/L(i);
-          rbax=(r22x+r12x)/L(i);
-          % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
-          K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
-          K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
-          K21=K12';
-          K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
-          K2=[K11 K12 ;K21 K22];
-          % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
-          T2_3=zeros(6,6);
-          T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
-          T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
-          T2_3(3,3)=1;
-          T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
-          T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
-          T2_3(6,6)=1;
-      end
+       elseif i==mbr
+           fprintf('\n MIEMBRO %d:',i);
+           fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
+           fprintf('\n\n\t\t (1) MIEMBRO PRISMÁTICO DE SECCIÓN RECTANGULAR');
+           fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCIÓN VARIABLE');
+           fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCIÓN VARIABLE');
+           fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCIÓN PRISMÁTICA CONSTANTE');
+           fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCIÓN VARIABLE');
+           DD(i) = input('\n\n OPCION : ');
+           fprintf('\n\n\n'); 
+           % ELEMENTO PRISMÁTICO DE SECCIÓN CONSTANTE DE FORMA RECTANGULAR
+           if DD(i)==1
+               B(i)=input('\n BASE DEL ELEMENTO [m]:');
+               H(i)=input(' ALTURA DEL ELEMENTO [m]:');
+               % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+               % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+               % SECCIONES
+               Bi(i)=B(i);
+               Hi(i)=H(i);
+               Bf(i)=Bi(i);
+               Hf(i)=Hi(i);
+               Di(i)=B(i);
+               Df(i)=Di(i);
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+               C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
+               C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
+               F(i)=L(i)-C1(i)-C2(i)
+               % CONSTANTES AUXILIARES PARA FUTUROS DESARROLLOS EN 3D
+               AREA(i)=B(i)*H(i);
+               INERx(i)=(B(i)*H(i)^3)/12;
+               INER(i)=INERx(i);
+               INERy(i)=(H(i)*B(i)^3)/12;
+               FIx(i)=(12*ELAS*INERx(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+               FIy(i)=(12*ELAS*INERy(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+               % GENERACIÓN DE LAS VARIABLES
+               FI(i)=(1/4)*FIx(i);
+               C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+               CP=C;
+               A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+               B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+               BP=B;
+               T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+               R=ELAS*AREA(i)/L(i);
+               % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+               K2=[R 0 0 -R 0 0;
+               0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+               0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+               -R 0 0 R 0 0;
+               0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+               0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+               % MATRIZ DE TRANSPORTE
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+               % ELEMENTO CUADRADO SÓLIDO DE SECCIÓN VARIABLE
+           elseif DD(i)==2
+               Bi(i)=input('\n BASE INICIAL [m]:');
+               Hi(i)=Bi(i);
+               Bf(i)=input('\n BASE FINAL [m]:');
+              % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+              % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+              % SECCIONES
+              Hf(i)=Bf(i);
+              B(i)=Bi(i);
+              H(i)=Hi(i);
+              Di(i)=Bi(i);
+              Df(i)=Di(i);
+              BET(i)=1.2;
+              INER(i)=(B(i)*H(i)^3)/12;
+              FI(i)=1;
+              AREA(i)=B(i)*H(i);
+              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+              % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+              f11=(L(i)/(ELAS*Hi(i)*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+              f22=(4*(L(i))^3/(ELAS*(Hi(i))^4))*(Hi(i)/Hf(i))^3+(6*L(i)/(5*GCOR*(Hi(i))^2))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+              f33=f22;
+              f26=(4*(L(i))^2/(ELAS*(Hi(i))^4))*((Hi(i)/Hf(i))^3+(1/2)*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i))));
+              f35=f26;
+              f66=(4*L(i)/(ELAS*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+              f55=f66;
+              f44=(64*L(i)/(27*GCOR*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+              % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+              raz=1/f11;
+              Detx=f22*f66-f26*f26;
+              r11x=f22/Detx;
+              r12x=(f26*L(i)-f22)/Detx;
+              r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+              raax=(r11x+r22x+2*r12x)/(L(i))^2;
+              rabx=(r11x+r12x)/L(i);
+              rbax=(r22x+r12x)/L(i);
+              % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+              K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+              K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+              K21=K12';
+              K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+              K2=[K11 K12 ;K21 K22];
+              % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+              T2_3=zeros(6,6);
+              T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+              T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+              T2_3(3,3)=1;
+              T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+              T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+              T2_3(6,6)=1;
+              % ELEMENTO RECTANGULAR SÓLIDO DE SECCIÓN VARIABLE
+           elseif DD(i)==3
+               Bi(i)=input('\n BASE DE TODO EL ELEMENTO [m]:');
+               Hi(i)=input(' ALTURA INICIAL DEL ELEMENTO [m]:');
+               Bf(i)=Bi(i);
+               Hf(i)=input(' ALTURA FINAL DEL ELEMENTO [m]:');
+               Bb=Bi(i);
+               % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+               % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+               % SECCIONES
+               B(i)=Bi(i);
+               H(i)=Hi(i);
+               Di(i)=Bi(i);
+               Df(i)=Di(i);
+               INER(i)=(B(i)*H(i)^3)/12;
+               FI(i)=1;
+               AREA(i)=B(i)*H(i);
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               BET(i)=input('\n FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+               fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+               fprintf('\n\n\t\t     LA FUNCIÓN F(x) INDICA LA VARIACIÓN CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
+               fprintf('\n\t\t\t                                                                    ');
+               fprintf('\n\n\t\t     SI LA FUNCIÓN ES LINEAL: Y=F(x)=');
+               fprintf('\n\t\t\t                                      -Hi/2+((Hi-Hf)/(2*LL))*x                                       ');
+               fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‘ ;                                                                                                                           ');
+               fprintf('\n\t\t\t   ESTANDO EL EJE X SOBRE EL     Y|                                                                                            ');
+               fprintf('\n\t\t\t    CENTROIDE DEL MIEMBRO         |                                                                                            ');
+               fprintf('\n\t\t\t                                  |                                                                                            ');
+               fprintf('\n\t\t\t                                  |_ _ _ _ _                                                                                   ');
+               fprintf('\n\t\t\t                                           X                                                                                   ');
+               fprintf('\n\t\t\t                                                                                                                               ');
+               fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t                                                                                                                              ');
+               fprintf('\n\t\t\t                                                                                                                              ');
+               fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
+               fprintf('\n\n\t\t (1) FUNCIÓN LINEAL SOBRE EL EJE CENTROIDAL');
+               fprintf('\n\n\t\t (2) OTRO TIPO DE VARIACIÓN');
+               EE = input('\n\n OPCION : ');
+               if EE(i)==1
+                   % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                   f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
+                   f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
+                   f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
+                   f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   % DEFINICIÓN DE UNA FUNCIÓN DE x
+                   Hi=Hi(i);
+                   Hf=Hf(i);
+                   LL=L(i);
+                   dpc= @(x)(1./(((Bb.^3*(-Hi./2+((Hi-Hf)./(2*LL))*x))./3)*(1-(192*Bb./(pi.^5*(-Hi./2+((Hi-Hf)./(2*LL))*x)))*(tanh(pi*(-Hi./2+((Hi-Hf)./(2*LL))*x)./(2*Bb))))));
+                   f44=quad(@(x)dpc, 0, LL)
+                   % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                   raz=1/f11;
+                   Detx=f22*f66-f26*f26;
+                   r11x=f22/Detx;
+                   r12x=(f26*L(i)-f22)/Detx;
+                   r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                   raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                   rabx=(r11x+r12x)/L(i);
+                   rbax=(r22x+r12x)/L(i);
+                   % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                   K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                   K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                   K21=K12';
+                   K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                   K2=[K11 K12 ;K21 K22];
+                   % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                   T2_3=zeros(6,6);
+                   T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                   T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                   T2_3(3,3)=1;
+                   T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                   T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                   T2_3(6,6)=1;
+               else
+                   % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                   f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
+                   f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
+                   f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
+                   f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                   % DEFINICIÓN DE UNA FUNCIÓN DE x
+                   Hi=Hi(i);
+                   Hf=Hf(i);
+                   LL=L(i);
+                   f44=input(' INTRODUZCA LA f44=');
+                   % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                   raz=1/f11;
+                   Detx=f22*f66-f26*f26;
+                   r11x=f22/Detx;
+                   r12x=(f26*L(i)-f22)/Detx;
+                   r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                   raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                   rabx=(r11x+r12x)/L(i);
+                   rbax=(r22x+r12x)/L(i);
+                   % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                   K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                   K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                   K21=K12';
+                   K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                   K2=[K11 K12 ;K21 K22];
+                   % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                   T2_3=zeros(6,6);
+                   T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                   T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                   T2_3(3,3)=1;
+                   T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                   T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                   T2_3(6,6)=1;
+               end
+              % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN CONSTATE
+           elseif DD(i)==4
+               Di(i)=input('\n DIÁMETRO DEL ELEMENTO [m]:');
+               % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+               % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+               % SECCIONES
+               Df(i)=Di(i);
+               B(i)=Di(i);
+               H(i)=Di(i);
+               Bi(i)=B(i);
+               Hi(i)=H(i);
+               Bf(i)=Bi(i);
+               Hf(i)=Hi(i);
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+               AREA(i)=pi*Di(i)*Di(i)/4;
+               INER(i)=pi*(Di(i)/2)^4/4;
+               C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
+               C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
+               F(i)=L(i)-C1(i)-C2(i)
+               FI(i)=(3*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+               C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+               CP=C;
+               A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+               B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+               BP=B;
+               T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+               R=ELAS*AREA(i)/L(i);
+               K2=[R 0 0 -R 0 0;
+               0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+               0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+               -R 0 0 R 0 0;
+               0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+               0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+               % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN VARIABLE
+           elseif DD(i)==5
+               Di(i)=input('\n DIÁMETRO INICIAL DEL ELEMENTO [m]:');
+               Df(i)=input('\n DIÁMETRO FINAL DEL ELEMENTO [m]:');
+               BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+               % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+               % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+               % SECCIONES
+               B(i)=Di(i);
+               H(i)=Df(i);
+               Bi(i)=B(i);
+               Hi(i)=H(i);
+               Bf(i)=Bi(i);
+               Hf(i)=Hi(i);
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               AREA(i)=pi*Di(i)*Di(i)/4;
+               INER(i)=pi*(Di(i)/2)^4/4;
+               FIx(i)=(12*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2)
+               FIy(i)=FIx(i);
+               FI(i)=(1/4)*FIx(i);
+               % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+               f11=(4*L(i)/(pi*ELAS*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-Di(i)/Df(i));
+               f22=(64*(L(i))^3/(3*pi*ELAS*(Di(i))^4))*(Di(i)/Df(i))^3+(40*L(i)/(9*pi*GCOR*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i)));
+               f33=f22;
+               f26=(64*(L(i))^2/(3*pi*ELAS*(Di(i))^4))*((Di(i)/Df(i))^3+(1/2)*(Di(i)/(Df(i)-Di(i)))^2*(1+(Di(i)/Df(i))^2-2*(Di(i)/Df(i))));
+               f35=f26;
+               f66=(64*L(i)/(3*pi*ELAS*(Di(i))^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
+               f55=f66;
+               f44=(32*L(i)/(3*pi*GCOR*Di(i)^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
+               % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+               raz=1/f11;
+               Detx=f22*f66-f26*f26;
+               r11x=f22/Detx;
+               r12x=(f26*L(i)-f22)/Detx;
+               r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+               raax=(r11x+r22x+2*r12x)/(L(i))^2;
+               rabx=(r11x+r12x)/L(i);
+               rbax=(r22x+r12x)/L(i);
+               % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+               K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+               K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+               K21=K12';
+               K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+               K2=[K11 K12 ;K21 K22];
+               % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+           end
+       else
+           fprintf('\n MIEMBRO %d:',i);
+           fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
+           fprintf('\n\n\t\t (1) EL MIEMBRO TIENE LAS MISMAS CARACTERÍSTICAS QUE EL MIEMBRO ANTERIOR');
+           fprintf('\n\n\t\t (2) EL MIEMBRO TIENE CARACTERÍSTICAS DISTINTAS AL MIEMBRO ANTERIOR');
+           NUB=input('\n\n OPCION : ');
+           if NUB==1
+               DD(i)=DD(i-1);        
+               B(i)=B(i-1);
+               H(i)=H(i-1);
+               Bi(i)=Bi(i-1);
+               Hi(i)=Hi(i-1);
+               Bf(i)=Bf(i-1);
+               Hf(i)=Hf(i-1);
+               Di(i)=Di(i-1);
+               Df(i)=Df(i-1);
+               BET(i)=BET(i-1);
+               C1(i)=C1(i-1);
+               C2(i)=C2(i-1);
+               F(i)=F(i-1);
+               FI(i)=FI(i-1);
+               INER(i)=INER(i-1);
+               AREA(i)=AREA(i-1);
+               if DD(i)==1
+               %
+               C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+               CP=C;
+               A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+               B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+               BP=B;
+               T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+               R=ELAS*AREA(i)/L(i);
+               K2=[R 0 0 -R 0 0;
+               0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+               0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+               -R 0 0 R 0 0;
+               0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+               0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+               % MATRIZ DE TRANSPORTE
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+               % ELEMENTO CUADRADO SÓLIDO DE SECCIÓN VARIABLE
+           elseif DD(i)==2
+               % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+               f11=(L(i)/(ELAS*Hi(i)*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+               f22=(4*(L(i))^3/(ELAS*(Hi(i))^4))*(Hi(i)/Hf(i))^3+(6*L(i)/(5*GCOR*(Hi(i))^2))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+               f33=f22;
+               f26=(4*(L(i))^2/(ELAS*(Hi(i))^4))*((Hi(i)/Hf(i))^3+(1/2)*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i))));
+               f35=f26;
+               f66=(4*L(i)/(ELAS*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+               f55=f66;
+               f44=(64*L(i)/(27*GCOR*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+               % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+               raz=1/f11;
+               Detx=f22*f66-f26*f26;
+               r11x=f22/Detx;
+               r12x=(f26*L(i)-f22)/Detx;
+               r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+               raax=(r11x+r22x+2*r12x)/(L(i))^2;
+               rabx=(r11x+r12x)/L(i);
+               rbax=(r22x+r12x)/L(i);
+               % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+               K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+               K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+               K21=K12';
+               K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+               K2=[K11 K12 ;K21 K22];
+               % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+               % ELEMENTO RECTANGULAR SÓLIDO DE SECCIÓN VARIABLE
+           elseif DD(i)==3
+               % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+               f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+               f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+               f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+               f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
+               f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
+               f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
+               f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+               f=inline('FZ');
+               f44=quad(f,0,L(i));
+               % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+               raz=1/f11;
+               Detx=f22*f66-f26*f26;
+               r11x=f22/Detx;
+               r12x=(f26*L(i)-f22)/Detx;
+               r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+               raax=(r11x+r22x+2*r12x)/(L(i))^2;
+               rabx=(r11x+r12x)/L(i);
+               rbax=(r22x+r12x)/L(i);
+               % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+               K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+               K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+               K21=K12';
+               K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+               K2=[K11 K12 ;K21 K22];
+               % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+               % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN CONSTATE
+           elseif DD(i)==4
+               C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+               CP=C;
+               A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+               B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+               BP=B;
+               T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+               R=ELAS*AREA(i)/L(i);
+               K2=[R 0 0 -R 0 0;
+                   0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+                   0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+                   -R 0 0 R 0 0;
+                   0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+                   0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+               % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN VARIABLE
+           elseif DD(i)==5
+               % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+               f11=(4*L(i)/(pi*ELAS*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-Di(i)/Df(i));
+               f22=(64*(L(i))^3/(3*pi*ELAS*(Di(i))^4))*(Di(i)/Df(i))^3+(40*L(i)/(9*pi*GCOR*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i)));
+               f33=f22;
+               f26=(64*(L(i))^2/(3*pi*ELAS*(Di(i))^4))*((Di(i)/Df(i))^3+(1/2)*(Di(i)/(Df(i)-Di(i)))^2*(1+(Di(i)/Df(i))^2-2*(Di(i)/Df(i))));
+               f35=f26;
+               f66=(64*L(i)/(3*pi*ELAS*(Di(i))^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
+               f55=f66;
+               f44=(32*L(i)/(3*pi*GCOR*Di(i)^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
+               % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+               raz=1/f11;
+               Detx=f22*f66-f26*f26;
+               r11x=f22/Detx;
+               r12x=(f26*L(i)-f22)/Detx;
+               r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+               raax=(r11x+r22x+2*r12x)/(L(i))^2;
+               rabx=(r11x+r12x)/L(i);
+               rbax=(r22x+r12x)/L(i);
+               % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+               K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+               K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+               K21=K12';
+               K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+               K2=[K11 K12 ;K21 K22];
+               % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+               T2_3=zeros(6,6);
+               T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+               T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+               T2_3(3,3)=1;
+               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+               T2_3(6,6)=1;
+           end
+           elseif NUB==2
+               fprintf('\n MIEMBRO %d:',i);
+               fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
+               fprintf('\n\n\t\t (1) MIEMBRO PRISMÁTICO DE SECCIÓN RECTANGULAR');
+               fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCIÓN VARIABLE');
+               fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCIÓN VARIABLE');
+               fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCIÓN PRISMÁTICA CONSTANTE');
+               fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCIÓN VARIABLE');
+               DD(i) = input('\n\n OPCION : ');
+               fprintf('\n\n\n'); 
+               % ELEMENTO PRISMÁTICO DE SECCIÓN CONSTANTE DE FORMA RECTANGULAR
+              if DD(i)==1
+                  B(i)=input('\n BASE DEL ELEMENTO [m]:');
+                  H(i)=input(' ALTURA DEL ELEMENTO [m]:');
+                  % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+                  % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+                  % SECCIONES
+                  Bi(i)=B(i);
+                  Hi(i)=H(i);
+                  Bf(i)=Bi(i);
+                  Hf(i)=Hi(i);
+                  Di(i)=B(i);
+                  Df(i)=Di(i);
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                  BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+                  C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
+                  C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
+                  F(i)=L(i)-C1(i)-C2(i)
+                  % CONSTANTES AUXILIARES PARA FUTUROS DESARROLLOS EN 3D
+                  AREA(i)=B(i)*H(i);
+                  INERx(i)=(B(i)*H(i)^3)/12;
+                  INER(i)=INERx(i);
+                  INERy(i)=(H(i)*B(i)^3)/12;
+                  FIx(i)=(12*ELAS*INERx(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+                  FIy(i)=(12*ELAS*INERy(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+                  % GENERACIÓN DE LAS VARIABLES
+                  FI(i)=(1/4)*FIx(i);
+                  C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+                  CP=C;
+                  A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+                  B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+                  BP=B;
+                  T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+                  R=ELAS*AREA(i)/L(i);
+                  % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                  K2=[R 0 0 -R 0 0;
+                  0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+                  0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+                  -R 0 0 R 0 0;
+                  0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+                  0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+                  % MATRIZ DE TRANSPORTE
+                  T2_3=zeros(6,6);
+                  T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                  T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                  T2_3(3,3)=1;
+                  T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                  T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                  T2_3(6,6)=1;
+                  % ELEMENTO CUADRADO SÓLIDO DE SECCIÓN VARIABLE
+              elseif DD(i)==2
+                  Bi(i)=input('\n BASE INICIAL [m]:');
+                  Hi(i)=Bi(i);
+                  Bf(i)=input('\n BASE FINAL [m]:');
+                  % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+                  % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+                  % SECCIONES
+                  Hf(i)=Bf(i);
+                  B(i)=Bi(i);
+                  H(i)=Hi(i);
+                  Di(i)=Bi(i);
+                  Df(i)=Di(i);
+                  BET(i)=1.2;
+                  INER(i)=(B(i)*H(i)^3)/12;
+                  FI(i)=1;
+                  AREA(i)=B(i)*H(i);
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                  % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                  f11=(L(i)/(ELAS*Hi(i)*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+                  f22=(4*(L(i))^3/(ELAS*(Hi(i))^4))*(Hi(i)/Hf(i))^3+(6*L(i)/(5*GCOR*(Hi(i))^2))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
+                  f33=f22;
+                  f26=(4*(L(i))^2/(ELAS*(Hi(i))^4))*((Hi(i)/Hf(i))^3+(1/2)*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i))));
+                  f35=f26;
+                  f66=(4*L(i)/(ELAS*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+                  f55=f66;
+                  f44=(64*L(i)/(27*GCOR*(Hi(i))^4))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^3);
+                  % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                  raz=1/f11;
+                  Detx=f22*f66-f26*f26;
+                  r11x=f22/Detx;
+                  r12x=(f26*L(i)-f22)/Detx;
+                  r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                  raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                  rabx=(r11x+r12x)/L(i);
+                  rbax=(r22x+r12x)/L(i);
+                  % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                  K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                  K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                  K21=K12';
+                  K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                  K2=[K11 K12 ;K21 K22];
+                  % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                  T2_3=zeros(6,6);
+                  T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                  T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                  T2_3(3,3)=1;
+                  T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                  T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                  T2_3(6,6)=1;
+                  % ELEMENTO RECTANGULAR SÓLIDO DE SECCIÓN VARIABLE
+              elseif DD(i)==3
+                  Bi(i)=input('\n BASE DE TODO EL ELEMENTO [m]:');
+                  Hi(i)=input(' ALTURA INICIAL DEL ELEMENTO [m]:');
+                  Bf(i)=Bi(i);
+                  Hf(i)=input(' ALTURA FINAL DEL ELEMENTO [m]:');
+                  Bb=Bi(i);
+                  % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+                  % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+                  % SECCIONES
+                  B(i)=Bi(i);
+                  H(i)=Hi(i);
+                  Di(i)=Bi(i);
+                  Df(i)=Di(i);
+                  INER(i)=(B(i)*H(i)^3)/12;
+                  FI(i)=1;
+                  AREA(i)=B(i)*H(i);
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                  BET(i)=input('\n FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+                  fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+                  fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+                  fprintf('\n\n\t\t     LA FUNCIÓN F(x) INDICA LA VARIACIÓN CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
+                  fprintf('\n\t\t\t                                                                    ');
+                  fprintf('\n\n\t\t     SI LA FUNCIÓN ES LINEAL: Y=F(x)=');
+                  fprintf('\n\t\t\t                                      -Hi/2+((Hi-Hf)/(2*LL))*x                                       ');
+                  fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+                  fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+                  fprintf('\n\t\t\t ‘ ;                                                                                                                           ');
+                  fprintf('\n\t\t\t   ESTANDO EL EJE X SOBRE EL     Y|                                                                                            ');
+                  fprintf('\n\t\t\t    CENTROIDE DEL MIEMBRO         |                                                                                            ');
+                  fprintf('\n\t\t\t                                  |                                                                                            ');
+                  fprintf('\n\t\t\t                                  |_ _ _ _ _                                                                                   ');
+                  fprintf('\n\t\t\t                                           X                                                                                   ');
+                  fprintf('\n\t\t\t                                                                                                                               ');
+                  fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+                  fprintf('\n\t\t\t ‘ ; ......................................................................................................................... ');
+                  fprintf('\n\t\t\t                                                                                                                              ');
+                  fprintf('\n\t\t\t                                                                                                                              ');
+                  fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
+                  fprintf('\n\n\t\t (1) FUNCIÓN LINEAL SOBRE EL EJE CENTROIDAL');
+                  fprintf('\n\n\t\t (2) OTRO TIPO DE VARIACIÓN');
+                  EE = input('\n\n OPCION : ');
+                  if EE(i)==1
+                      % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                      f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
+                      f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
+                      f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
+                      f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      % DEFINICIÓN DE UNA FUNCIÓN DE x
+                      Hi=Hi(i);
+                      Hf=Hf(i);
+                      LL=L(i);
+                      dpc= @(x)(1./(((Bb.^3*(-Hi./2+((Hi-Hf)./(2*LL))*x))./3)*(1-(192*Bb./(pi.^5*(-Hi./2+((Hi-Hf)./(2*LL))*x)))*(tanh(pi*(-Hi./2+((Hi-Hf)./(2*LL))*x)./(2*Bb))))));
+                      f44=quad(@(x)dpc, 0, LL)
+                      % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                      raz=1/f11;
+                      Detx=f22*f66-f26*f26;
+                      r11x=f22/Detx;
+                      r12x=(f26*L(i)-f22)/Detx;
+                      r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                      raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                      rabx=(r11x+r12x)/L(i);
+                      rbax=(r22x+r12x)/L(i);
+                      % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                      K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                      K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                      K21=K12';
+                      K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                      K2=[K11 K12 ;K21 K22];
+                      % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                      T2_3=zeros(6,6);
+                      T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                      T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                      T2_3(3,3)=1;
+                      T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                      T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                      T2_3(6,6)=1;
+                  else
+                      % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                      f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      f33=(12*(L(i))^3/(ELAS*(Bb)^3*Hi(i)))*(3/2+(1/2)*(Hf(i)/Hi(i))^2-2*(Hf(i)/Hi(i))+log(Hf(i)/Hi(i)))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      f26=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))^2*(1+(Hi(i)/Hf(i))^2-2*(Hi(i)/Hf(i)));
+                      f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
+                      f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
+                      f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
+                      % DEFINICIÓN DE UNA FUNCIÓN DE x
+                      Hi=Hi(i);
+                      Hf=Hf(i);
+                      LL=L(i);
+                      f44=input(' INTRODUZCA LA f44=');
+                      % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                      raz=1/f11;
+                      Detx=f22*f66-f26*f26;
+                      r11x=f22/Detx;
+                      r12x=(f26*L(i)-f22)/Detx;
+                      r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                      raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                      rabx=(r11x+r12x)/L(i);
+                      rbax=(r22x+r12x)/L(i);
+                      % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                      K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                      K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                      K21=K12';
+                      K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                      K2=[K11 K12 ;K21 K22];
+                      % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                      T2_3=zeros(6,6);
+                      T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                      T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                      T2_3(3,3)=1;
+                      T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                      T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                      T2_3(6,6)=1;
+                  end
+                  % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN CONSTATE
+              elseif DD(i)==4
+                  Di(i)=input('\n DIÁMETRO DEL ELEMENTO [m]:');
+                  % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+                  % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+                  % SECCIONES
+                  Df(i)=Di(i);
+                  B(i)=Di(i);
+                  H(i)=Di(i);
+                  Bi(i)=B(i);
+                  Hi(i)=H(i);
+                  Bf(i)=Bi(i);
+                  Hf(i)=Hi(i);
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                  BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+                  AREA(i)=pi*Di(i)*Di(i)/4;
+                  INER(i)=pi*(Di(i)/2)^4/4;
+                  C1(i)=input('\n\n INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):');
+                  C2(i)=input('\n\n INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):');
+                  F(i)=L(i)-C1(i)-C2(i)
+                  FI(i)=(3*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
+                  C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+                  CP=C;
+                  A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+                  B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
+                  BP=B;
+                  T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
+                  R=ELAS*AREA(i)/L(i);
+                  K2=[R 0 0 -R 0 0;
+                  0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);
+                  0 (B+C1(i)*T) (C+2*C1(i)*B+C1(i)^2*T) 0 -(B+C1(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T);
+                  -R 0 0 R 0 0;
+                  0 -T -(B+C1(i)*T) 0 T -(B+C2(i)*T);
+                  0 (B+C2(i)*T) (A+C1(i)*B+C2(i)*B+C1(i)*C2(i)*T) 0 -(B+C2(i)*T) (C+2*C2(i)*B+C2(i)^2*T)];
+                  T2_3=zeros(6,6);
+                  T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                  T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                  T2_3(3,3)=1;
+                  T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                  T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                  T2_3(6,6)=1;
+                  % ELEMENTO CIRCULAR SÓLIDO DE SECCIÓN VARIABLE
+              elseif DD(i)==5
+                  Di(i)=input('\n DIÁMETRO INICIAL DEL ELEMENTO [m]:');
+                  Df(i)=input('\n DIÁMETRO FINAL DEL ELEMENTO [m]:');
+                  BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
+                  % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
+                  % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
+                  % SECCIONES
+                  B(i)=Di(i);
+                  H(i)=Df(i);
+                  Bi(i)=B(i);
+                  Hi(i)=H(i);
+                  Bf(i)=Bi(i);
+                  Hf(i)=Hi(i);
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                  AREA(i)=pi*Di(i)*Di(i)/4;
+                  INER(i)=pi*(Di(i)/2)^4/4;
+                  FIx(i)=(12*ELAS*INER(i)*BET(i))/(GCOR*AREA(i)*L(i)^2)
+                  FIy(i)=FIx(i);
+                  FI(i)=(1/4)*FIx(i);
+                  % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
+                  f11=(4*L(i)/(pi*ELAS*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-Di(i)/Df(i));
+                  f22=(64*(L(i))^3/(3*pi*ELAS*(Di(i))^4))*(Di(i)/Df(i))^3+(40*L(i)/(9*pi*GCOR*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i)));
+                  f33=f22;
+                  f26=(64*(L(i))^2/(3*pi*ELAS*(Di(i))^4))*((Di(i)/Df(i))^3+(1/2)*(Di(i)/(Df(i)-Di(i)))^2*(1+(Di(i)/Df(i))^2-2*(Di(i)/Df(i))));
+                  f35=f26;
+                  f66=(64*L(i)/(3*pi*ELAS*(Di(i))^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
+                  f55=f66;
+                  f44=(32*L(i)/(3*pi*GCOR*Di(i)^4))*(Di(i)/(Df(i)-Di(i)))*(1-(Di(i)/Df(i))^3);
+                  % ELEMENTOS DE LA MATRIZ DE RIGIDECES
+                  raz=1/f11;
+                  Detx=f22*f66-f26*f26;
+                  r11x=f22/Detx;
+                  r12x=(f26*L(i)-f22)/Detx;
+                  r22x=(f66*(L(i))^2-2*f26*L(i)+f22)/Detx;
+                  raax=(r11x+r22x+2*r12x)/(L(i))^2;
+                  rabx=(r11x+r12x)/L(i);
+                  rbax=(r22x+r12x)/L(i);
+                  % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
+                  K11=[raz 0 0 ; 0 raax rabx ; 0 rabx r11x];
+                  K12=[-raz 0 0 ; 0 -raax rbax ; 0 -rabx r12x];
+                  K21=K12';
+                  K22=[raz 0 0 ; 0 raax -rbax ; 0 -rbax r22x];
+                  K2=[K11 K12 ;K21 K22];
+                  % MATRIZ DE TRANSPORTE A COORDENADAS LOCALES
+                  T2_3=zeros(6,6);
+                  T2_3(1,1)=COSENO(i);T2_3(1,2)=SENO(i);
+                  T2_3(2,1)=-SENO(i);T2_3(2,2)=COSENO(i);
+                  T2_3(3,3)=1;
+                  T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
+                  T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
+                  T2_3(6,6)=1;
+              end
+           end   
+       end
+       
       %------------------ ENSAMBLAJE DE LA MATRIZ--------------------------
       K3=T2_3'*K2*T2_3;
       MAT_AUX=K3;
@@ -635,12 +1465,12 @@ for i=1: nnr
           %
           % PARA LA GENERACIÓN DE VARIABLES SE 
           % INCLUYEN LOS SIGUIENTES CÁLCULOS
-          C=((4*ELAS*INERx(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
+          C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
           CP=C;
-          A=((2*ELAS*INERx(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
-          B=((6*ELAS*INERx(i))/L(i)^2)*(1/(1+4*FI(i)));
+          A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
+          B=((6*ELAS*INER(i))/L(i)^2)*(1/(1+4*FI(i)));
           BP=B;
-          T=(12*ELAS*INERx(i))/L(i)^3*(1/(1+4*FI(i)));
+          T=(12*ELAS*INER(i))/L(i)^3*(1/(1+4*FI(i)));
           R=ELAS*AREA(i)/L(i);
           K2=[R 0 0 -R 0 0;
           0 T (B+C1(i)*T) 0 -T (B+C2(i)*T);

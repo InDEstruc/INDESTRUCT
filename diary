@@ -1,0 +1,579 @@
+
+			 ‘ ; ........................................................ 
+			 ‘ ; ........................................................ 
+			 ‘;|                                                         |
+			 ‘;|          UNIVERSIDAD AUTÓNOMA DE NUEVO LEÓN             |
+			 ‘;|                                                         |
+			 ‘;|              FACULTAD DE INGENIERÍA CIVIL               |
+			 ‘;|                 ANALISIS ESTRUCTURAL II                 |
+			 ‘;|                                                         |
+			 ‘;|                 PROGRAMA PARA RESOLVER:                 |
+			 ‘;|          MARCOS PLANOS CONSIDERANDO CORTANTE            |
+			 ‘;|                                                         |
+			 ‘ ; .........................................................
+			 ‘;|                     ¡INDESTRUCT!                        |
+			 ‘ ; .........................................................
+			 ‘;|               ING. EDWIN M. R. MARTÍNEZ                 |
+			 ‘;|                                                         |
+			 ‘;|                       2013-03-13                        |
+			 ‘;|                                                         |
+			  ‘;..........................................................
+			 ‘ ; .........................................................
+
+
+
+
+ ESCOJA UNA DE LAS SIGUIENTES OPCIONES:
+
+		 (1) ANÁLIZAR UNA ESTRUCTURA
+
+		 (2) NO ANALIZAR
+
+ OPCION : 1
+
+
+
+
+
+		 PROGRAMA PARA CALCULAR MARCOS PLANOS CON NUDOS RÍGIDOS Y CORTANTE
+			 COORDENADAS     Y|                                 
+			        GLOBALES  |                                 
+			                  |                                 
+			                  |_ _ _ _ _                        
+			                              X                     
+			                                                    PRESIONE CUALQUIER TECLA PARA CONTINUAR
+
+
+
+ INGRESE EL NÚMERO DE NUDOS:4
+ NÚMERO DE NUDOS RESTRINGIDOS:2
+
+ NÚMERO DEL NUDO RESTRINGIDO:1
+
+ EXISTEN DESPLAZAMIENTO EN X,S o N:N
+ EXISTEN DESPLAZAMIENTO EN Y,S o N:N
+ EXISTE ROTACIÓN, S o N:N
+
+ NÚMERO DEL NUDO RESTRINGIDO:4
+
+ EXISTEN DESPLAZAMIENTO EN X,S o N:N
+ EXISTEN DESPLAZAMIENTO EN Y,S o N:N
+ EXISTE ROTACIÓN, S o N:N
+
+CG =
+
+     0     0     0
+     1     2     3
+     4     5     6
+     0     0     0
+
+
+ngl =
+
+     6
+
+
+ INGRESE EL NUMERO DE MIEMBROS:3
+
+ MIEMBRO 1:
+ INGRESE EL NUDO INICIAL:1
+ INGRESE EL NUDO FINAL:2
+
+ MIEMBRO 2:
+ INGRESE EL NUDO INICIAL:2
+ INGRESE EL NUDO FINAL:3
+
+ MIEMBRO 3:
+ INGRESE EL NUDO INICIAL:4
+ INGRESE EL NUDO FINAL:3
+
+NUDO_INICIAL =
+
+     1     2     4
+
+
+NUDO_FINAL =
+
+     2     3     3
+
+
+VC =
+
+     0     0     0     1     2     3
+     1     2     3     4     5     6
+     0     0     0     4     5     6
+
+
+ COORDENADAS EN LOS NUDOS:
+
+ NUDO 1:
+ COORDENADA [m]:x:0
+ COORDENADA [m]:y:0
+
+ NUDO 2:
+ COORDENADA [m]:x:0
+ COORDENADA [m]:y:6
+
+ NUDO 3:
+ COORDENADA [m]:x:6
+ COORDENADA [m]:y:6
+
+ NUDO 4:
+ COORDENADA [m]:x:6
+ COORDENADA [m]:y:0
+
+L =
+
+     6     6     6
+
+
+SENO =
+
+     1     0     1
+
+
+COSENO =
+
+     0     1     0
+
+
+
+ ¿LOS DATOS INTRODUCIDOS SON CORRECTOS? (NÚMERO DE OPCIÓN):
+
+		 (1) SÍ
+
+		 (2) NO
+
+ OPCION : 1
+
+
+
+
+ CARACTERÍSTICAS DE LOS MIEMBROS:
+ MÓDULO DE ELASTICIDAD [T/m^2]:2000000
+
+ MÓDULO DE POISSON (0.2):0.2
+
+M_CORTANTE =
+
+    8.333333333333334e+005
+
+
+
+ UNICAMENTE EN LA SECCIÓN RECTANGULAR PRISMÁTICA SE PUEDEN MODELAR EXTREMOS INFINITAMENTE RÍGIDOS
+ MIEMBRO 1:
+
+ ESCOJA UNA DE LAS SIGUIENTES OPCIONES:
+
+		 (1) MIEMBRO PRISMÁTICO DE SECCIÓN RECTANGULAR
+
+		 (2) MIEMBRO CUADRADO DE SECCIÓN VARIABLE
+
+		 (3) MIEMBRO RECTANGULAR DE SECCIÓN VARIABLE
+
+		 (4) MIEMBRO CIRCULAR DE SECCIÓN PRISMÁTICA CONSTANTE
+
+		 (5) MIEMBRO CIRCULAR DE SECCIÓN VARIABLE
+
+ OPCION : 1
+
+
+
+
+ BASE DEL ELEMENTO [m]:0.4
+ ALTURA DEL ELEMENTO [m]:0.4
+
+ VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):1.2
+
+
+ INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):0
+
+
+ INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):0
+
+F =
+
+     6
+
+
+ MIEMBRO 2:
+
+ ESCOJA UNA DE LAS SIGUIENTES OPCIONES:
+
+		 (1) EL MIEMBRO TIENE LAS MISMAS CARACTERÍSTICAS QUE EL MIEMBRO ANTERIOR
+
+		 (2) EL MIEMBRO TIENE CARACTERÍSTICAS DISTINTAS AL MIEMBRO ANTERIOR
+
+ OPCION : 1
+
+ MIEMBRO 3:
+
+ ESCOJA UNA DE LAS SIGUIENTES OPCIONES:
+
+		 (1) MIEMBRO PRISMÁTICO DE SECCIÓN RECTANGULAR
+
+		 (2) MIEMBRO CUADRADO DE SECCIÓN VARIABLE
+
+		 (3) MIEMBRO RECTANGULAR DE SECCIÓN VARIABLE
+
+		 (4) MIEMBRO CIRCULAR DE SECCIÓN PRISMÁTICA CONSTANTE
+
+		 (5) MIEMBRO CIRCULAR DE SECCIÓN VARIABLE
+
+ OPCION : 1
+
+
+
+
+ BASE DEL ELEMENTO [m]:0.4
+ ALTURA DEL ELEMENTO [m]:0.4
+
+ VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):1.2
+
+
+ INGRESE EL VALOR DE C1 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO INICIAL):0
+
+
+ INGRESE EL VALOR DE C2 [m] (LONGITUD DEL SEGMENTO DE RIGIDEZ INFINITA EN EL NODO FINAL):0
+
+F =
+
+     6     6     6
+
+
+MAT_RIGIDEZ =
+
+  1.0e+004 *
+
+  Columns 1 through 3
+
+   5.356737464162426                   0   0.070212392487274
+                   0   5.356737464162426   0.070212392487274
+   0.070212392487274   0.070212392487274   0.563496577145866
+  -5.333333333333334                   0                   0
+                   0  -0.023404130829091  -0.070212392487274
+                   0   0.070212392487274   0.139526066350711
+
+  Columns 4 through 6
+
+  -5.333333333333334                   0                   0
+                   0  -0.023404130829091   0.070212392487274
+                   0  -0.070212392487274   0.139526066350711
+   5.356737464162426                   0   0.070212392487274
+                   0   5.356737464162426  -0.070212392487274
+   0.070212392487274  -0.070212392487274   0.563496577145866
+
+
+ EXISTEN CARGAS EN JUNTAS ?,S o N:S
+
+ INGRESE EL NÚMERO DE JUNTAS CARGADAS:1
+
+ NUDO CARGADO:2
+ FUERZA HORIZONTAL=10
+ FUERZA VERTICAL=0
+ MOMENTO=0
+
+n =
+
+     1
+
+
+n =
+
+     2
+
+
+n =
+
+     3
+
+
+Q_CJ =
+
+    10
+     0
+     0
+     0
+     0
+     0
+
+
+ EXISTEN CARGAS EN MIEMBROS ?,S o  N:N
+
+Q_CM =
+
+     0
+     0
+     0
+     0
+     0
+     0
+
+
+ VECTOR DE CARGAS:
+Q_TOTAL =
+
+    10
+     0
+     0
+     0
+     0
+     0
+
+
+ DESPLAZAMIENTOS GENERALIZADOS:
+Q_des =
+
+   0.030618293986270
+   0.000080108932324
+  -0.003076994484020
+   0.030524647376362
+  -0.000080108932324
+  -0.003061485970191
+
+
+ MIEMBRO 1:
+ DEFORMACIONES EN MIEMBRO P1:
+P1 =
+
+  Columns 1 through 3
+
+                   0                   0                   0
+
+  Columns 4 through 6
+
+   0.030618293986270   0.000080108932324  -0.003076994484020
+
+
+ MATRIZ EN COORDENADAS LOCALES DEL MIEMBRO 1:
+K3 =
+
+  1.0e+004 *
+
+  Columns 1 through 3
+
+   0.023404130829091                   0  -0.070212392487274
+                   0   5.333333333333334                   0
+  -0.070212392487274                   0   0.281748288572933
+  -0.023404130829091                   0   0.070212392487274
+                   0  -5.333333333333334                   0
+  -0.070212392487274                   0   0.139526066350711
+
+  Columns 4 through 6
+
+  -0.023404130829091                   0  -0.070212392487274
+                   0  -5.333333333333334                   0
+   0.070212392487274                   0   0.139526066350711
+   0.023404130829091                   0   0.070212392487274
+                   0   5.333333333333334                   0
+   0.070212392487274                   0   0.281748288572933
+
+
+ ACCIONES DE MIEMBRO EN COORDENADAS LOCALES ( PROBLEMA COMPLEMENTARIO ):
+
+P =
+
+  -4.272476390611729
+   5.005514138250220
+  17.204627381165189
+   4.272476390611729
+  -5.005514138250220
+  12.828457448336133
+
+
+ ACCIONES DE MIEMBRO EN COORDENADAS LOCALES ( PROBLEMA PRINCIPAL ):
+
+Q2_AUX =
+
+     0
+     0
+     0
+     0
+     0
+     0
+
+
+ ACCIONES FINALES EN MI MIEMBRO EN COORDENADAS LOCALES ( P.P.+P.C. ):
+P_FINAL =
+
+  -4.272476390611729
+   5.005514138250220
+  17.204627381165189
+   4.272476390611729
+  -5.005514138250220
+  12.828457448336133
+
+
+P2 =
+
+  -5.005514138250220
+  -4.272476390611729
+  17.204627381165189
+   5.005514138250220
+   4.272476390611729
+  12.828457448336133
+
+
+ MIEMBRO 2:
+ DEFORMACIONES EN MIEMBRO P1:
+P1 =
+
+  Columns 1 through 3
+
+   0.030618293986270   0.000080108932324  -0.003076994484020
+
+  Columns 4 through 6
+
+   0.030524647376362  -0.000080108932324  -0.003061485970191
+
+
+ MATRIZ EN COORDENADAS LOCALES DEL MIEMBRO 2:
+K3 =
+
+  1.0e+004 *
+
+  Columns 1 through 3
+
+   5.333333333333334                   0                   0
+                   0   0.023404130829091   0.070212392487274
+                   0   0.070212392487274   0.281748288572933
+  -5.333333333333334                   0                   0
+                   0  -0.023404130829091  -0.070212392487274
+                   0   0.070212392487274   0.139526066350711
+
+  Columns 4 through 6
+
+  -5.333333333333334                   0                   0
+                   0  -0.023404130829091   0.070212392487274
+                   0  -0.070212392487274   0.139526066350711
+   5.333333333333334                   0                   0
+                   0   0.023404130829091  -0.070212392487274
+                   0  -0.070212392487274   0.281748288572933
+
+
+ ACCIONES DE MIEMBRO EN COORDENADAS LOCALES ( PROBLEMA COMPLEMENTARIO ):
+
+P =
+
+   4.994485861749581
+  -4.272476390611729
+ -12.828457448336135
+  -4.994485861749581
+   4.272476390611729
+ -12.806400895334235
+
+
+ ACCIONES DE MIEMBRO EN COORDENADAS LOCALES ( PROBLEMA PRINCIPAL ):
+
+Q2_AUX =
+
+     0
+     0
+     0
+     0
+     0
+     0
+
+
+ ACCIONES FINALES EN MI MIEMBRO EN COORDENADAS LOCALES ( P.P.+P.C. ):
+P_FINAL =
+
+   4.994485861749581
+  -4.272476390611729
+ -12.828457448336135
+  -4.994485861749581
+   4.272476390611729
+ -12.806400895334235
+
+
+P2 =
+
+   4.994485861749581
+  -4.272476390611729
+ -12.828457448336135
+  -4.994485861749581
+   4.272476390611729
+ -12.806400895334235
+
+
+ MIEMBRO 3:
+ DEFORMACIONES EN MIEMBRO P1:
+P1 =
+
+  Columns 1 through 3
+
+                   0                   0                   0
+
+  Columns 4 through 6
+
+   0.030524647376362  -0.000080108932324  -0.003061485970191
+
+
+ MATRIZ EN COORDENADAS LOCALES DEL MIEMBRO 3:
+K3 =
+
+  1.0e+004 *
+
+  Columns 1 through 3
+
+   0.023404130829091                   0  -0.070212392487274
+                   0   5.333333333333334                   0
+  -0.070212392487274                   0   0.281748288572933
+  -0.023404130829091                   0   0.070212392487274
+                   0  -5.333333333333334                   0
+  -0.070212392487274                   0   0.139526066350711
+
+  Columns 4 through 6
+
+  -0.023404130829091                   0  -0.070212392487274
+                   0  -5.333333333333334                   0
+   0.070212392487274                   0   0.139526066350711
+   0.023404130829091                   0   0.070212392487274
+                   0   5.333333333333334                   0
+   0.070212392487274                   0   0.281748288572933
+
+
+ ACCIONES DE MIEMBRO EN COORDENADAS LOCALES ( PROBLEMA COMPLEMENTARIO ):
+
+P =
+
+   4.272476390611728
+   4.994485861749273
+  17.160514275161397
+  -4.272476390611728
+  -4.994485861749273
+  12.806400895334237
+
+
+ ACCIONES DE MIEMBRO EN COORDENADAS LOCALES ( PROBLEMA PRINCIPAL ):
+
+Q2_AUX =
+
+     0
+     0
+     0
+     0
+     0
+     0
+
+
+ ACCIONES FINALES EN MI MIEMBRO EN COORDENADAS LOCALES ( P.P.+P.C. ):
+P_FINAL =
+
+   4.272476390611728
+   4.994485861749273
+  17.160514275161397
+  -4.272476390611728
+  -4.994485861749273
+  12.806400895334237
+
+
+P2 =
+
+  -4.994485861749273
+   4.272476390611728
+  17.160514275161397
+   4.994485861749273
+  -4.272476390611728
+  12.806400895334237
+
