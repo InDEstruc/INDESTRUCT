@@ -2,6 +2,7 @@ diary on
 format long
 fprintf('\n\t\t\t ‘ ; ........................................................ ');
 fprintf('\n\t\t\t ‘ ; ........................................................ ');
+fprintf('\n\t\t\t ‘ ; ........................................................ ');
 fprintf('\n\t\t\t ‘;|                                                         |');
 fprintf('\n\t\t\t ‘;|          UNIVERSIDAD AUTÓNOMA DE NUEVO LEÓN             |');
 fprintf('\n\t\t\t ‘;|                                                         |');
@@ -9,7 +10,9 @@ fprintf('\n\t\t\t ‘;|              FACULTAD DE INGENIERÍA CIVIL               |'
 fprintf('\n\t\t\t ‘;|                 ANALISIS ESTRUCTURAL II                 |');
 fprintf('\n\t\t\t ‘;|                                                         |');
 fprintf('\n\t\t\t ‘;|                 PROGRAMA PARA RESOLVER:                 |');
-fprintf('\n\t\t\t ‘;|          MARCOS PLANOS CONSIDERANDO CORTANTE            |');
+fprintf('\n\t\t\t ‘;|                                                         |');
+fprintf('\n\t\t\t ‘;|                MARCOS PLANOS CONSIDERANDO               |');
+fprintf('\n\t\t\t ‘;|            DEFORMACIONES AXIALES Y CORTANTES            |');
 fprintf('\n\t\t\t ‘;|                                                         |');
 fprintf('\n\t\t\t ‘ ; .........................................................');
 fprintf('\n\t\t\t ‘;|                     ¡INDESTRUCT!                        |');
@@ -20,6 +23,7 @@ fprintf('\n\t\t\t ‘;|                       2013-03-13                        |'
 fprintf('\n\t\t\t ‘;|                                                         |');
 fprintf('\n\t\t\t  ‘;..........................................................');
 fprintf('\n\t\t\t ‘ ; .........................................................');
+fprintf('\n\t\t\t ‘ ; ........................................................ ');
 fprintf('\n\n\n');
 fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
 fprintf('\n\n\t\t (1) ANÁLIZAR UNA ESTRUCTURA');
@@ -780,8 +784,8 @@ for i=1: nnr
            NUB=input('\n\n OPCION : ');
            if NUB==1
                DD(i)=DD(i-1);        
-               B(i)=B(i-1);
                H(i)=H(i-1);
+               B(i)=1;
                Bi(i)=Bi(i-1);
                Hi(i)=Hi(i-1);
                Bf(i)=Bf(i-1);
@@ -795,8 +799,8 @@ for i=1: nnr
                FI(i)=FI(i-1);
                INER(i)=INER(i-1);
                AREA(i)=AREA(i-1);
-               if DD(i)==1
-               %
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               if DD(i)==1               
                C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
                CP=C;
                A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
@@ -854,6 +858,7 @@ for i=1: nnr
                T2_3(6,6)=1;
                % ELEMENTO RECTANGULAR SÓLIDO DE SECCIÓN VARIABLE
            elseif DD(i)==3
+               Bb=Bi(i);
                % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
                f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
                f22=(6*(L(i))^3/(ELAS*Bb*(Hi(i))^3))*((Hi(i)/Hf(i))^2-(Hi(i)/(Hf(i)-Hi(i)))^3*(Hf(i)/Hi(i)-Hi(i)/Hf(i)-2*log(Hf(i)/Hi(i))))+(6*L(i)/(5*GCOR*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
