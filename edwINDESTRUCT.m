@@ -1,35 +1,28 @@
 diary on
 format long
-fprintf('\n\t\t\t ë ; .........................................................');
-fprintf('\n\t\t\t ë ; .........................................................');
-fprintf('\n\t\t\t ë ; .........................................................');
-fprintf('\n\t\t\t ë;|                                                         |');
-fprintf('\n\t\t\t ë;|          UNIVERSIDAD AUT”NOMA DE NUEVO LE”N             |');
-fprintf('\n\t\t\t ë;|                                                         |');
-fprintf('\n\t\t\t ë;|              FACULTAD DE INGENIERÕA CIVIL               |');
-fprintf('\n\t\t\t ë;|                 ANALISIS ESTRUCTURAL II                 |');
-fprintf('\n\t\t\t ë;|                                                         |');
-fprintf('\n\t\t\t ë;|                 PROGRAMA PARA RESOLVER:                 |');
-fprintf('\n\t\t\t ë;|                                                         |');
-fprintf('\n\t\t\t ë;|                MARCOS PLANOS CONSIDERANDO               |');
-fprintf('\n\t\t\t ë;|            DEFORMACIONES AXIALES Y CORTANTES            |');
-fprintf('\n\t\t\t ë;|                                                         |');
-fprintf('\n\t\t\t ë ; .........................................................');
-fprintf('\n\t\t\t ë;|                     °INDESTRUCT I!                        |');
-fprintf('\n\t\t\t ë ; .........................................................');
-fprintf('\n\t\t\t ë;|               ING. EDWIN M. R. MARTÕNEZ                 |');
-fprintf('\n\t\t\t ë;|                                                         |');
-fprintf('\n\t\t\t ë;|                       2013-03-13                        |');
-fprintf('\n\t\t\t ë;|                                                         |');
-fprintf('\n\t\t\t  ë;..........................................................');
-fprintf('\n\t\t\t ë ; .........................................................');
-fprintf('\n\t\t\t ë ; .........................................................');
+fprintf('\n\t\t\t ‚Äò ; .........................................................');
+fprintf('\n\t\t\t ‚Äò;|                                                         |');
+fprintf('\n\t\t\t ‚Äò;|                 PROGRAMA PARA RESOLVER:                 |');
+fprintf('\n\t\t\t ‚Äò;|                                                         |');
+fprintf('\n\t\t\t ‚Äò;|                MARCOS PLANOS CONSIDERANDO               |');
+fprintf('\n\t\t\t ‚Äò;|            DEFORMACIONES AXIALES Y CORTANTES            |');
+fprintf('\n\t\t\t ‚Äò;|                                                         |');
+fprintf('\n\t\t\t ‚Äò ; .........................................................');
+fprintf('\n\t\t\t ‚Äò;|                     ¬°INDESTRUCT I!                        |');
+fprintf('\n\t\t\t ‚Äò ; .........................................................');
+fprintf('\n\t\t\t ‚Äò;|               ING. EDWIN M. R. MART√çNEZ                 |');
+fprintf('\n\t\t\t ‚Äò;|                                                         |');
+fprintf('\n\t\t\t ‚Äò;|                       2013-03-13                        |');
+fprintf('\n\t\t\t ‚Äò;|                                                         |');
+fprintf('\n\t\t\t  ‚Äò;..........................................................');
+fprintf('\n\t\t\t ‚Äò ; .........................................................');
+fprintf('\n\t\t\t ‚Äò ; .........................................................');
 fprintf('\n\n\n');
-DV =menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES DE AN¡LISIS:','TEORÕA DE PRIMER ORDEN','TEORÕA DE SEGUNDO ORDEN');
+DV =menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES DE AN√ÅLISIS:','TEOR√çA DE PRIMER ORDEN','TEOR√çA DE SEGUNDO ORDEN');
 if DV==1
     clc
     clear all
-    fprintf('\n\n\t\t PROGRAMA PARA CALCULAR MARCOS PLANOS CON NUDOS RÕGIDOS Y CORTANTE');
+    fprintf('\n\n\t\t PROGRAMA PARA CALCULAR MARCOS PLANOS CON NUDOS R√çGIDOS Y CORTANTE');
     % -------- ARREGLO CG --------
     % EN ESTA ETAPA SE DESARROLLA LA MATRIZ DE COORDENADAS GENERALIZADAS DONDE
     % SE ESPECIFICAN LOS GRADOS DE LIBERTAD EXISTENTES DEPENDIENDO DEL TIPO DE
@@ -41,11 +34,11 @@ if DV==1
     fprintf('\n\t\t\t                              X                     ');
     fprintf('\n\t\t\t                                                    ');
     %%
-    nod = input('\n\n\n INGRESE EL N⁄MERO DE NUDOS:');
-    nnr = input(' N⁄MERO DE NUDOS RESTRINGIDOS:');
+    nod = input('\n\n\n INGRESE EL N√öMERO DE NUDOS:');
+    nnr = input(' N√öMERO DE NUDOS RESTRINGIDOS:');
     CG = ones(nod,3 );
     for i=1: nnr
-        nudo_res = input('\n N⁄MERO DEL NUDO RESTRINGIDO:');
+        nudo_res = input('\n N√öMERO DEL NUDO RESTRINGIDO:');
         x1 = input('\n EXISTEN DESPLAZAMIENTO EN X,S o N:','s');
         if x1=='N'
             CG(nudo_res,1)=0;
@@ -54,7 +47,7 @@ if DV==1
         if y1=='N'
             CG(nudo_res,2)=0;
         else,end
-        r1=input(' EXISTE ROTACI”N, S o N:','s');
+        r1=input(' EXISTE ROTACI√ìN, S o N:','s');
         if r1=='N'
             CG(nudo_res,3)=0;
         else,end
@@ -104,7 +97,7 @@ if DV==1
    L
    SENO
    COSENO   
-   ZZZ=menu('øLOS DATOS INTRODUCIDOS SON CORRECTOS?','SÕ','NO');
+   ZZZ=menu('¬øLOS DATOS INTRODUCIDOS SON CORRECTOS?','S√ç','NO');
    fprintf('\n\n\n'); 
    if ZZZ==2   
        fprintf('\n\n\t\t FIN DEL PROGRAMA, PRESIONE Y VOLVER A INICIAR');
@@ -114,25 +107,25 @@ if DV==1
    else
    end
    %----------------- K3-------------------------------------------------
-   fprintf('\n CARACTERÕSTICAS DE LOS MIEMBROS:');
-   ELAS=input('\n M”DULO DE ELASTICIDAD [T/m^2]:');
-   POISSON=input('\n M”DULO DE POISSON (0.2):');
+   fprintf('\n CARACTER√çSTICAS DE LOS MIEMBROS:');
+   ELAS=input('\n M√ìDULO DE ELASTICIDAD [T/m^2]:');
+   POISSON=input('\n M√ìDULO DE POISSON (0.2):');
    GCOR=ELAS/(2*(1+POISSON));
    M_CORTANTE=GCOR
    T2_3=zeros(6,6);
-   fprintf('\n\n UNICAMENTE EN LA SECCI”N RECTANGULAR PRISM¡TICA SE PUEDEN MODELAR EXTREMOS INFINITAMENTE RÕGIDOS');
+   fprintf('\n\n UNICAMENTE EN LA SECCI√ìN RECTANGULAR PRISM√ÅTICA SE PUEDEN MODELAR EXTREMOS INFINITAMENTE R√çGIDOS');
    for i=1:mbr
        if i==1
            fprintf('\n MIEMBRO %d:',i);
            fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
-           fprintf('\n\n\t\t (1) MIEMBRO PRISM¡TICO DE SECCI”N RECTANGULAR');
-           fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCI”N VARIABLE');
-           fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCI”N VARIABLE');
-           fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCI”N PRISM¡TICA CONSTANTE');
-           fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCI”N VARIABLE');
+           fprintf('\n\n\t\t (1) MIEMBRO PRISM√ÅTICO DE SECCI√ìN RECTANGULAR');
+           fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCI√ìN VARIABLE');
+           fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCI√ìN VARIABLE');
+           fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCI√ìN PRISM√ÅTICA CONSTANTE');
+           fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCI√ìN VARIABLE');
            DD(i) = input('\n\n OPCION : ');
            fprintf('\n\n\n'); 
-           % ELEMENTO PRISM¡TICO DE SECCI”N CONSTANTE DE FORMA RECTANGULAR
+           % ELEMENTO PRISM√ÅTICO DE SECCI√ìN CONSTANTE DE FORMA RECTANGULAR
           if DD(i)==1
               B(i)=input('\n BASE DEL ELEMENTO [m]:');
               H(i)=input(' ALTURA DEL ELEMENTO [m]:');
@@ -158,7 +151,7 @@ if DV==1
               INERy(i)=(H(i)*B(i)^3)/12;
               FIx(i)=(12*ELAS*INERx(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
               FIy(i)=(12*ELAS*INERy(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
-              % GENERACI”N DE LAS VARIABLES
+              % GENERACI√ìN DE LAS VARIABLES
               FI(i)=(1/4)*FIx(i);
               C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
               CP=C;
@@ -182,7 +175,7 @@ if DV==1
               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
               T2_3(6,6)=1;
-              % ELEMENTO CUADRADO S”LIDO DE SECCI”N VARIABLE
+              % ELEMENTO CUADRADO S√ìLIDO DE SECCI√ìN VARIABLE
           elseif DD(i)==2
               Bi(i)=input('\n BASE INICIAL [m]:');
               Hi(i)=Bi(i);
@@ -237,7 +230,7 @@ if DV==1
              T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
              T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
              T2_3(6,6)=1;
-             % ELEMENTO RECTANGULAR S”LIDO DE SECCI”N VARIABLE
+             % ELEMENTO RECTANGULAR S√ìLIDO DE SECCI√ìN VARIABLE
           elseif DD(i)==3
               Bi(i)=input('\n BASE DE TODO EL ELEMENTO [m]:');
               Hi(i)=input(' ALTURA INICIAL DEL ELEMENTO [m]:');
@@ -260,26 +253,26 @@ if DV==1
               F(i)=L(i);
               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
               BET(i)=input('\n FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
-              fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-              fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-              fprintf('\n\n\t\t     LA FUNCI”N F(x) INDICA LA VARIACI”N CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
+              fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+              fprintf('\n\n\t\t     LA FUNCI√ìN F(x) INDICA LA VARIACI√ìN CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
               fprintf('\n\t\t\t                                                                    ');
-              fprintf('\n\n\t\t     SI LA FUNCI”N ES LINEAL: Y=F(x)=');
+              fprintf('\n\n\t\t     SI LA FUNCI√ìN ES LINEAL: Y=F(x)=');
               fprintf('\n\t\t\t                                      (abs(Hi-Hf)/LL)*x                                       ');
-              fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-              fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-              fprintf('\n\t\t\t ë ;                                                                                                                           ');
+              fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‚Äò ;                                                                                                                           ');
               fprintf('\n\t\t\t   ESTANDO EL EJE X SOBRE EL     Y|                                                                                            ');
               fprintf('\n\t\t\t    CENTROIDE DEL MIEMBRO         |                                                                                            ');
               fprintf('\n\t\t\t                                  |                                                                                            ');
               fprintf('\n\t\t\t                                  |_ _ _ _ _                                                                                   ');
               fprintf('\n\t\t\t                                           X                                                                                   ');
               fprintf('\n\t\t\t                                                                                                                               ');
-              fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-              fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+              fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
               fprintf('\n\t\t\t                                                                                                                              ');
               fprintf('\n\t\t\t                                                                                                                              ');
-              EE(i)=menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES:','FUNCI”N LINEAL','OTRO TIPO DE VARIACI”N');
+              EE(i)=menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES:','FUNCI√ìN LINEAL','OTRO TIPO DE VARIACI√ìN');
               if EE(i)==1
                   % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
                   f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
@@ -289,7 +282,7 @@ if DV==1
                   f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
                   f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
                   f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-                  % DEFINICI”N DE UNA FUNCI”N DE x
+                  % DEFINICI√ìN DE UNA FUNCI√ìN DE x
                   Hi=Hi(i);
                   Hf=Hf(i);
                   LL=L(i);
@@ -328,7 +321,7 @@ if DV==1
                   f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
                   f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
                   f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-                  % DEFINICI”N DE UNA FUNCI”N DE x
+                  % DEFINICI√ìN DE UNA FUNCI√ìN DE x
                   Hi=Hi(i);
                   Hf=Hf(i);
                   LL=L(i);
@@ -358,9 +351,9 @@ if DV==1
                   T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                   T2_3(6,6)=1;
               end
-              % ELEMENTO CIRCULAR S”LIDO DE SECCI”N CONSTATE
+              % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN CONSTATE
           elseif DD(i)==4
-              Di(i)=input('\n DI¡METRO DEL ELEMENTO [m]:');
+              Di(i)=input('\n DI√ÅMETRO DEL ELEMENTO [m]:');
               % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
               % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
               % SECCIONES
@@ -400,10 +393,10 @@ if DV==1
               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
               T2_3(6,6)=1;
-              % ELEMENTO CIRCULAR S”LIDO DE SECCI”N VARIABLE
+              % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN VARIABLE
           elseif DD(i)==5
-              Di(i)=input('\n DI¡METRO INICIAL DEL ELEMENTO [m]:');
-              Df(i)=input('\n DI¡METRO FINAL DEL ELEMENTO [m]:');
+              Di(i)=input('\n DI√ÅMETRO INICIAL DEL ELEMENTO [m]:');
+              Df(i)=input('\n DI√ÅMETRO FINAL DEL ELEMENTO [m]:');
               BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
               % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
               % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
@@ -461,14 +454,14 @@ if DV==1
        elseif i==mbr
            fprintf('\n MIEMBRO %d:',i);
            fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
-           fprintf('\n\n\t\t (1) MIEMBRO PRISM¡TICO DE SECCI”N RECTANGULAR');
-           fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCI”N VARIABLE');
-           fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCI”N VARIABLE');
-           fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCI”N PRISM¡TICA CONSTANTE');
-           fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCI”N VARIABLE');
+           fprintf('\n\n\t\t (1) MIEMBRO PRISM√ÅTICO DE SECCI√ìN RECTANGULAR');
+           fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCI√ìN VARIABLE');
+           fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCI√ìN VARIABLE');
+           fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCI√ìN PRISM√ÅTICA CONSTANTE');
+           fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCI√ìN VARIABLE');
            DD(i) = input('\n\n OPCION : ');
            fprintf('\n\n\n'); 
-           % ELEMENTO PRISM¡TICO DE SECCI”N CONSTANTE DE FORMA RECTANGULAR
+           % ELEMENTO PRISM√ÅTICO DE SECCI√ìN CONSTANTE DE FORMA RECTANGULAR
            if DD(i)==1
                B(i)=input('\n BASE DEL ELEMENTO [m]:');
                H(i)=input(' ALTURA DEL ELEMENTO [m]:');
@@ -494,7 +487,7 @@ if DV==1
                INERy(i)=(H(i)*B(i)^3)/12;
                FIx(i)=(12*ELAS*INERx(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
                FIy(i)=(12*ELAS*INERy(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
-               % GENERACI”N DE LAS VARIABLES
+               % GENERACI√ìN DE LAS VARIABLES
                FI(i)=(1/4)*FIx(i);
                C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
                CP=C;
@@ -518,7 +511,7 @@ if DV==1
                T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                T2_3(6,6)=1;
-               % ELEMENTO CUADRADO S”LIDO DE SECCI”N VARIABLE
+               % ELEMENTO CUADRADO S√ìLIDO DE SECCI√ìN VARIABLE
            elseif DD(i)==2
                Bi(i)=input('\n BASE INICIAL [m]:');
                Hi(i)=Bi(i);
@@ -572,7 +565,7 @@ if DV==1
               T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
               T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
               T2_3(6,6)=1;
-              % ELEMENTO RECTANGULAR S”LIDO DE SECCI”N VARIABLE
+              % ELEMENTO RECTANGULAR S√ìLIDO DE SECCI√ìN VARIABLE
            elseif DD(i)==3
                Bi(i)=input('\n BASE DE TODO EL ELEMENTO [m]:');
                Hi(i)=input(' ALTURA INICIAL DEL ELEMENTO [m]:');
@@ -595,26 +588,26 @@ if DV==1
                F(i)=L(i);
                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                BET(i)=input('\n FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
-               fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-               fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-               fprintf('\n\n\t\t     LA FUNCI”N F(x) INDICA LA VARIACI”N CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
+               fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+               fprintf('\n\n\t\t     LA FUNCI√ìN F(x) INDICA LA VARIACI√ìN CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
                fprintf('\n\t\t\t                                                                    ');
-               fprintf('\n\n\t\t     SI LA FUNCI”N ES LINEAL: Y=F(x)=');
+               fprintf('\n\n\t\t     SI LA FUNCI√ìN ES LINEAL: Y=F(x)=');
                fprintf('\n\t\t\t                                      (abs(Hi-Hf)/LL)*x                                       ');
-               fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-               fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-               fprintf('\n\t\t\t ë ;                                                                                                                           ');
+               fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‚Äò ;                                                                                                                           ');
                fprintf('\n\t\t\t   ESTANDO EL EJE X SOBRE EL     Y|                                                                                            ');
                fprintf('\n\t\t\t    CENTROIDE DEL MIEMBRO         |                                                                                            ');
                fprintf('\n\t\t\t                                  |                                                                                            ');
                fprintf('\n\t\t\t                                  |_ _ _ _ _                                                                                   ');
                fprintf('\n\t\t\t                                           X                                                                                   ');
                fprintf('\n\t\t\t                                                                                                                               ');
-               fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-               fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+               fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
                fprintf('\n\t\t\t                                                                                                                              ');
                fprintf('\n\t\t\t                                                                                                                              ');
-               EE(i)=menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES:','FUNCI”N LINEAL','OTRO TIPO DE VARIACI”N');
+               EE(i)=menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES:','FUNCI√ìN LINEAL','OTRO TIPO DE VARIACI√ìN');
                if EE(i)==1
                    % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
                    f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
@@ -624,7 +617,7 @@ if DV==1
                    f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
                    f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
                    f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-                   % DEFINICI”N DE UNA FUNCI”N DE x
+                   % DEFINICI√ìN DE UNA FUNCI√ìN DE x
                    Hi=Hi(i);
                    Hf=Hf(i);
                    LL=L(i);
@@ -663,7 +656,7 @@ if DV==1
                    f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
                    f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
                    f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-                   % DEFINICI”N DE UNA FUNCI”N DE x
+                   % DEFINICI√ìN DE UNA FUNCI√ìN DE x
                    Hi=Hi(i);
                    Hf=Hf(i);
                    LL=L(i);
@@ -693,9 +686,9 @@ if DV==1
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
                end
-              % ELEMENTO CIRCULAR S”LIDO DE SECCI”N CONSTATE
+              % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN CONSTATE
            elseif DD(i)==4
-               Di(i)=input('\n DI¡METRO DEL ELEMENTO [m]:');
+               Di(i)=input('\n DI√ÅMETRO DEL ELEMENTO [m]:');
                % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
                % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
                % SECCIONES
@@ -735,10 +728,10 @@ if DV==1
                T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                T2_3(6,6)=1;
-               % ELEMENTO CIRCULAR S”LIDO DE SECCI”N VARIABLE
+               % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN VARIABLE
            elseif DD(i)==5
-               Di(i)=input('\n DI¡METRO INICIAL DEL ELEMENTO [m]:');
-               Df(i)=input('\n DI¡METRO FINAL DEL ELEMENTO [m]:');
+               Di(i)=input('\n DI√ÅMETRO INICIAL DEL ELEMENTO [m]:');
+               Df(i)=input('\n DI√ÅMETRO FINAL DEL ELEMENTO [m]:');
                BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
                % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
                % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
@@ -795,8 +788,8 @@ if DV==1
        else
            fprintf('\n MIEMBRO %d:',i);
            fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
-           fprintf('\n\n\t\t (1) EL MIEMBRO TIENE LAS MISMAS CARACTERÕSTICAS QUE EL MIEMBRO ANTERIOR');
-           fprintf('\n\n\t\t (2) EL MIEMBRO TIENE CARACTERÕSTICAS DISTINTAS AL MIEMBRO ANTERIOR');
+           fprintf('\n\n\t\t (1) EL MIEMBRO TIENE LAS MISMAS CARACTER√çSTICAS QUE EL MIEMBRO ANTERIOR');
+           fprintf('\n\n\t\t (2) EL MIEMBRO TIENE CARACTER√çSTICAS DISTINTAS AL MIEMBRO ANTERIOR');
            NUB=input('\n\n OPCION : ');
            if NUB==1
                DD(i)=DD(i-1);        
@@ -839,7 +832,7 @@ if DV==1
                    T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
-                   % ELEMENTO CUADRADO S”LIDO DE SECCI”N VARIABLE
+                   % ELEMENTO CUADRADO S√ìLIDO DE SECCI√ìN VARIABLE
                elseif DD(i)==2
                    % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
                    f11=(L(i)/(ELAS*Hi(i)*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
@@ -873,7 +866,7 @@ if DV==1
                    T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
-                   % ELEMENTO RECTANGULAR S”LIDO DE SECCI”N VARIABLE
+                   % ELEMENTO RECTANGULAR S√ìLIDO DE SECCI√ìN VARIABLE
                elseif DD(i)==3
                    Bb=Bi(i);
                    % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
@@ -908,7 +901,7 @@ if DV==1
                    T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
-                   % ELEMENTO CIRCULAR S”LIDO DE SECCI”N CONSTATE
+                   % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN CONSTATE
                elseif DD(i)==4
                    C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
                    CP=C;
@@ -930,7 +923,7 @@ if DV==1
                    T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
-                   % ELEMENTO CIRCULAR S”LIDO DE SECCI”N VARIABLE
+                   % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN VARIABLE
                elseif DD(i)==5
                    % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
                    f11=(4*L(i)/(pi*ELAS*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-Di(i)/Df(i));
@@ -968,14 +961,14 @@ if DV==1
            elseif NUB==2
                fprintf('\n MIEMBRO %d:',i);
                fprintf('\n\n ESCOJA UNA DE LAS SIGUIENTES OPCIONES:');
-               fprintf('\n\n\t\t (1) MIEMBRO PRISM¡TICO DE SECCI”N RECTANGULAR');
-               fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCI”N VARIABLE');
-               fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCI”N VARIABLE');
-               fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCI”N PRISM¡TICA CONSTANTE');
-               fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCI”N VARIABLE');
+               fprintf('\n\n\t\t (1) MIEMBRO PRISM√ÅTICO DE SECCI√ìN RECTANGULAR');
+               fprintf('\n\n\t\t (2) MIEMBRO CUADRADO DE SECCI√ìN VARIABLE');
+               fprintf('\n\n\t\t (3) MIEMBRO RECTANGULAR DE SECCI√ìN VARIABLE');
+               fprintf('\n\n\t\t (4) MIEMBRO CIRCULAR DE SECCI√ìN PRISM√ÅTICA CONSTANTE');
+               fprintf('\n\n\t\t (5) MIEMBRO CIRCULAR DE SECCI√ìN VARIABLE');
                DD(i) = input('\n\n OPCION : ');
                fprintf('\n\n\n'); 
-               % ELEMENTO PRISM¡TICO DE SECCI”N CONSTANTE DE FORMA RECTANGULAR
+               % ELEMENTO PRISM√ÅTICO DE SECCI√ìN CONSTANTE DE FORMA RECTANGULAR
                if DD(i)==1
                    B(i)=input('\n BASE DEL ELEMENTO [m]:');
                    H(i)=input(' ALTURA DEL ELEMENTO [m]:');
@@ -1001,7 +994,7 @@ if DV==1
                    INERy(i)=(H(i)*B(i)^3)/12;
                    FIx(i)=(12*ELAS*INERx(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
                    FIy(i)=(12*ELAS*INERy(i)*BET(i))/(GCOR*AREA(i)*L(i)^2);
-                   % GENERACI”N DE LAS VARIABLES
+                   % GENERACI√ìN DE LAS VARIABLES
                    FI(i)=(1/4)*FIx(i);
                    C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
                    CP=C;
@@ -1025,7 +1018,7 @@ if DV==1
                    T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
-                   % ELEMENTO CUADRADO S”LIDO DE SECCI”N VARIABLE
+                   % ELEMENTO CUADRADO S√ìLIDO DE SECCI√ìN VARIABLE
                elseif DD(i)==2
                    Bi(i)=input('\n BASE INICIAL [m]:');
                    Hi(i)=Bi(i);
@@ -1079,7 +1072,7 @@ if DV==1
                    T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
-                   % ELEMENTO RECTANGULAR S”LIDO DE SECCI”N VARIABLE
+                   % ELEMENTO RECTANGULAR S√ìLIDO DE SECCI√ìN VARIABLE
                elseif DD(i)==3
                    Bi(i)=input('\n BASE DE TODO EL ELEMENTO [m]:');
                    Hi(i)=input(' ALTURA INICIAL DEL ELEMENTO [m]:');
@@ -1102,26 +1095,26 @@ if DV==1
                    F(i)=L(i);
                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                    BET(i)=input('\n FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
-                   fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-                   fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-                   fprintf('\n\n\t\t     LA FUNCI”N F(x) INDICA LA VARIACI”N CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
+                   fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+                   fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+                   fprintf('\n\n\t\t     LA FUNCI√ìN F(x) INDICA LA VARIACI√ìN CON LA LONGITUD DE LA FORMA DEL ELEMENTO,');
                    fprintf('\n\t\t\t                                                                    ');
-                   fprintf('\n\n\t\t     SI LA FUNCI”N ES LINEAL: Y=F(x)=');
+                   fprintf('\n\n\t\t     SI LA FUNCI√ìN ES LINEAL: Y=F(x)=');
                    fprintf('\n\t\t\t                                      (abs(Hi-Hf)/LL)*x                                       ');
-                   fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-                   fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-                   fprintf('\n\t\t\t ë ;                                                                                                                           ');
+                   fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+                   fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+                   fprintf('\n\t\t\t ‚Äò ;                                                                                                                           ');
                    fprintf('\n\t\t\t   ESTANDO EL EJE X SOBRE EL     Y|                                                                                            ');
                    fprintf('\n\t\t\t    CENTROIDE DEL MIEMBRO         |                                                                                            ');
                    fprintf('\n\t\t\t                                  |                                                                                            ');
                    fprintf('\n\t\t\t                                  |_ _ _ _ _                                                                                   ');
                    fprintf('\n\t\t\t                                           X                                                                                   ');
                    fprintf('\n\t\t\t                                                                                                                               ');
-                   fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
-                   fprintf('\n\t\t\t ë ; ......................................................................................................................... ');
+                   fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
+                   fprintf('\n\t\t\t ‚Äò ; ......................................................................................................................... ');
                    fprintf('\n\t\t\t                                                                                                                              ');
                    fprintf('\n\t\t\t                                                                                                                              ');
-                   EE(i)=menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES:','FUNCI”N LINEAL','OTRO TIPO DE VARIACI”N');
+                   EE(i)=menu('ESCOJA UNA DE LAS SIGUIENTES OPCIONES:','FUNCI√ìN LINEAL','OTRO TIPO DE VARIACI√ìN');
                    if EE(i)==1
                        % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
                        f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
@@ -1131,7 +1124,7 @@ if DV==1
                        f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
                        f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
                        f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-                       % DEFINICI”N DE UNA FUNCI”N DE x
+                       % DEFINICI√ìN DE UNA FUNCI√ìN DE x
                        Hi=Hi(i);
                        Hf=Hf(i);
                        LL=L(i);
@@ -1170,7 +1163,7 @@ if DV==1
                        f35=(12*(L(i))^2/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))^2*(Hf(i)/Hi(i)-log(Hf(i)/Hi(i))-1);
                        f66=(6*L(i)/(ELAS*Bb*(Hi(i))^3))*(Hi(i)/(Hf(i)-Hi(i)))*(1-(Hi(i)/Hf(i))^2);
                        f55=(12*L(i)/(ELAS*(Bb)^3*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
-                       % DEFINICI”N DE UNA FUNCI”N DE x
+                       % DEFINICI√ìN DE UNA FUNCI√ìN DE x
                        Hi=Hi(i);
                        Hf=Hf(i);
                        LL=L(i);
@@ -1200,9 +1193,9 @@ if DV==1
                        T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                        T2_3(6,6)=1;
                    end
-                  % ELEMENTO CIRCULAR S”LIDO DE SECCI”N CONSTATE
+                  % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN CONSTATE
                elseif DD(i)==4
-                   Di(i)=input('\n DI¡METRO DEL ELEMENTO [m]:');
+                   Di(i)=input('\n DI√ÅMETRO DEL ELEMENTO [m]:');
                    % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
                    % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
                    % SECCIONES
@@ -1242,10 +1235,10 @@ if DV==1
                    T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
                    T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
                    T2_3(6,6)=1;
-                   % ELEMENTO CIRCULAR S”LIDO DE SECCI”N VARIABLE
+                   % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN VARIABLE
                elseif DD(i)==5
-                   Di(i)=input('\n DI¡METRO INICIAL DEL ELEMENTO [m]:');
-                   Df(i)=input('\n DI¡METRO FINAL DEL ELEMENTO [m]:');
+                   Di(i)=input('\n DI√ÅMETRO INICIAL DEL ELEMENTO [m]:');
+                   Df(i)=input('\n DI√ÅMETRO FINAL DEL ELEMENTO [m]:');
                    BET(i)=input('\n VALOR DEL FACTOR DE FORMA (RECTANGULAR=1.2; CIRCULAR=10/9):');
                    % ELEMENTOS UNICAMENTE NECESARIOS PARA EL CONTEO DURANTE EL USO
                    % DE ELEMENTOS DE CUALQUIERA DE LOS DISTINTOS TIPOS POSIBLES DE
@@ -1333,9 +1326,9 @@ if DV==1
    MAT_RIGIDEZ=AUX
    %-------------- ARREGLO Q_TOTAL ( VECTOR DE CARGAS ) -------------------
    Q=zeros(ngl,1);
-   V1=menu('øEXISTEN CARGAS EN JUNTAS?','SÕ','NO');
+   V1=menu('¬øEXISTEN CARGAS EN JUNTAS?','S√ç','NO');
    if V1==1
-       njc=input('\n INGRESE EL N⁄MERO DE JUNTAS CARGADAS:');
+       njc=input('\n INGRESE EL N√öMERO DE JUNTAS CARGADAS:');
        for i=1:njc
            NC=input('\n NUDO CARGADO:');
            Q1(1)=input(' FUERZA HORIZONTAL=');
@@ -1355,9 +1348,9 @@ if DV==1
    end
    Q=zeros(ngl,1);
    Q2_ALMAC=zeros(mbr,6);
-   V3=menu('øEXISTEN CARGAS EN LOS MIEMBROS?','SÕ','NO');
+   V3=menu('¬øEXISTEN CARGAS EN LOS MIEMBROS?','S√ç','NO');
    if V3==1
-       nmc=input('\n INGRESE EL N⁄MERO DE MIEMBROS CARGADOS:');
+       nmc=input('\n INGRESE EL N√öMERO DE MIEMBROS CARGADOS:');
        for ll=1:nmc
            clear Q2
            fprintf('\n\t EL PROGRAMA UNICAMENTE CONSIDERA CAMBIOS POR CORTANTE EN LAS CARGAS');
@@ -1366,18 +1359,18 @@ if DV==1
            fprintf('\n\t ');
            fprintf('\n\t ');
            fprintf('\n\t ');
-           MC=input('\n INGRESE EN ORDEN NUM…RICO CADA MIEMBRO CARGADO:');
+           MC=input('\n INGRESE EN ORDEN NUM√âRICO CADA MIEMBRO CARGADO:');
            fprintf('\n\t ');
            fprintf('\n\t ESCOJA UNA DE LAS SIGUIENTES OPCIONES DE CARGAS:');
            fprintf('\n\t ');
            fprintf('\n\n (1) CARGA UNIFORMEMENTE DISTRIBUIDA EN TODO EL MIEMBRO');
-           fprintf('\n (2) CARGA TRIANGULAR CON ALTURA M¡XIMA EN EL CENTRO');
+           fprintf('\n (2) CARGA TRIANGULAR CON ALTURA M√ÅXIMA EN EL CENTRO');
            fprintf('\n (3) CARGA TRIANGULAR CON CARGA CRECIENTE DESDE EL NUDO INICIAL');
            fprintf('\n (4) CARGA TRAPEZOIDAL');
            fprintf('\n (5) CARGA PUNTUAL EN EL CENTRO DEL MIEMBRO');
            fprintf('\n (6) CARGA PUNTUAL A DIFERENTE DISTANCIA');
            fprintf('\n (7) NINGUNA DE LAS ANTERIORES');
-           V4=input('\n\n\n OPCI”N:');
+           V4=input('\n\n\n OPCI√ìN:');
            % CARGA UNIFORMEMENTE DISTRIBUIDA EN TODO EL MIEMBRO
            if V4==1
                CAR=input('\n CARGA (T/m):');
@@ -1387,10 +1380,10 @@ if DV==1
                Q2(4)=0;
                Q2(5)=Q2(2);
                Q2(6)=-Q2(3);
-               % CARGA TRIANGULARMENTE DISTRIBUIDA CON ALTURA M¡XIMA AL CENTRO
+               % CARGA TRIANGULARMENTE DISTRIBUIDA CON ALTURA M√ÅXIMA AL CENTRO
                % LONGITUDINAL DEL MIEMBRO
            elseif V4==2
-               CAR=input('\n CARGA M¡XIMA (T/m):');
+               CAR=input('\n CARGA M√ÅXIMA (T/m):');
                Q2(1)=0;
                Q2(2)=CAR*L(MC)/4;
                Q2(3)=5*CAR*L(MC)^2/96;
@@ -1399,7 +1392,7 @@ if DV==1
                Q2(6)=-Q2(3); 
                % CARGA TRIANGULAR CRECIENTE DESDE EL NUDO INICIAL
            elseif V4==3   
-               CAR=input('\n CARGA M¡XIMA (T/m):');
+               CAR=input('\n CARGA M√ÅXIMA (T/m):');
                Q2(1)=0;
                Q2(2)=3*CAR*L(MC)/20;
                Q2(3)=CAR*L(MC)^2/30;
@@ -1408,7 +1401,7 @@ if DV==1
                Q2(6)=-CAR*L(MC)^2/20;
                % CARGA TRAPEZOIDALMENTE DISTRIBUIDA
            elseif V4==4
-               CAR=input('\n CARGA M¡XIMA (T/m):');
+               CAR=input('\n CARGA M√ÅXIMA (T/m):');
                a=input('\n DISTANCIA a (m):');
                Q2(1)=0;
                Q2(2)=(CAR*L(MC)/2)*(1-(a/L(MC)));
@@ -1451,7 +1444,7 @@ if DV==1
            for mm=1:6
                Q2_ALMAC(MC,mm)=Q2(mm)';
            end
-           % GENERACI”N DE LAS CARGAS EN COORDENADAS GLOBALES
+           % GENERACI√ìN DE LAS CARGAS EN COORDENADAS GLOBALES
            T2_3=zeros(6,6);
            T2_3(1,1)=COSENO(MC);T2_3(1,2)=SENO(MC);
            T2_3(2,1)=-SENO(MC);T2_3(2,2)=COSENO(MC);
@@ -1486,7 +1479,7 @@ if DV==1
        for j=1:6
            if VC(i,j)~=0
                P1(j)=Q_des(VC(i,j));
-           else % ELIMINACI”N DE LOS GRADOS SIN LIBERTAD EN LA ESTRUCTURA
+           else % ELIMINACI√ìN DE LOS GRADOS SIN LIBERTAD EN LA ESTRUCTURA
                P1(j)=0;
            end
        end
@@ -1496,8 +1489,8 @@ if DV==1
            % MATRIZ DE RIGIDECES EN COORDENADAS LOCALES
            % PARA CADA CLASE DE ELEMENTO
            %
-           % PARA LA GENERACI”N DE VARIABLES SE 
-           % INCLUYEN LOS SIGUIENTES C¡LCULOS
+           % PARA LA GENERACI√ìN DE VARIABLES SE 
+           % INCLUYEN LOS SIGUIENTES C√ÅLCULOS
            C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
            CP=C;
            A=((2*ELAS*INER(i))/L(i))*((1-2*FI(i))/(1+4*FI(i)));
@@ -1519,7 +1512,7 @@ if DV==1
            T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
            T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
            T2_3(6,6)=1;
-           % ELEMENTO CUADRADO S”LIDO DE SECCI”N VARIABLE
+           % ELEMENTO CUADRADO S√ìLIDO DE SECCI√ìN VARIABLE
        elseif DD(i)==2
            % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
            f11=(L(i)/(ELAS*Hi(i)*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*(1-Hi(i)/Hf(i));
@@ -1553,7 +1546,7 @@ if DV==1
            T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
            T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
            T2_3(6,6)=1;
-           % ELEMENTO RECTANGULAR S”LIDO DE SECCI”N VARIABLE
+           % ELEMENTO RECTANGULAR S√ìLIDO DE SECCI√ìN VARIABLE
        elseif DD(i)==3
            % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
            f11=(L(i)/(ELAS*Bb*Hi(i)))*(Hi(i)/(Hf(i)-Hi(i)))*log(Hf(i)/Hi(i));
@@ -1587,7 +1580,7 @@ if DV==1
            T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
            T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
            T2_3(6,6)=1;
-           % ELEMENTO CIRCULAR S”LIDO DE SECCI”N CONSTATE
+           % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN CONSTATE
        elseif DD(i)==4
            C=((4*ELAS*INER(i))/L(i))*((1+FI(i))/(1+4*FI(i)));
            CP=C;
@@ -1609,7 +1602,7 @@ if DV==1
            T2_3(4,4)=COSENO(i);T2_3(4,5)=SENO(i);
            T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
            T2_3(6,6)=1;
-           % ELEMENTO CIRCULAR S”LIDO DE SECCI”N VARIABLE
+           % ELEMENTO CIRCULAR S√ìLIDO DE SECCI√ìN VARIABLE
        elseif DD(i)==5
            % ELEMENTOS DE LA MATRIZ DE FLEXIBILIDADES
            f11=(4*L(i)/(pi*ELAS*(Di(i))^2))*(Di(i)/(Df(i)-Di(i)))*(1-Di(i)/Df(i));
@@ -1644,7 +1637,7 @@ if DV==1
            T2_3(5,4)=-SENO(i);T2_3(5,5)=COSENO(i);
            T2_3(6,6)=1;
        end
-       % LO ANTERIOR SE REALIZA PARA LA GENERACI”N NUEVAMENTE DE LA MATRIZ
+       % LO ANTERIOR SE REALIZA PARA LA GENERACI√ìN NUEVAMENTE DE LA MATRIZ
        % DE RIGIDEZ
        fprintf('\n RESULTADOS FINALES DEL MIEMBRO %d:',i);
        fprintf('\n MATRIZ DE RIGIDEZ EN COORDENADAS LOCALES:\n');
@@ -1662,7 +1655,7 @@ if DV==1
        end
        Q2_AUX=Q2_AUX' % q_emp
        fprintf('\n ACCIONES FINALES DEL MIEMBRO EN COORDENADAS LOCALES ( P.P.+P.C. ):');
-       P_FINAL=Q2_AUX+P % ELEMENTOS MEC¡NICOS FINALES: q_emp+q'
+       P_FINAL=Q2_AUX+P % ELEMENTOS MEC√ÅNICOS FINALES: q_emp+q'
    end
 elseif DV==2
 end
@@ -1671,6 +1664,6 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 diary off
 format short
-fprintf('\n NO OLVIDE CONSULTAR EL DIARIO DEL C”DIGO');
+fprintf('\n NO OLVIDE CONSULTAR EL DIARIO DEL C√ìDIGO');
 pause
 open('diary')
